@@ -33,14 +33,15 @@ public class PlayerRender extends JPanel {
 		JPanel renderPanel = new JPanel() {
 			private static final long serialVersionUID = 1l;
 
+			List<Triangle> tris = RenderLoader.loadSkin("D:/Usuario/Downloads/wytherls skins/WINTER/BO.png");
+//			List<Triangle> tris = RenderLoader.loadSkin(null); // test white render
+
 			@Override
 			public void paint(Graphics g) {
 
 				Graphics2D g2 = (Graphics2D) g;
 				g2.setColor(Color.GRAY);
 				g2.fillRect(0, 0, getWidth(), getHeight());
-
-				List<Triangle> tris = RenderLoader.loadSkin("D:/Usuario/Downloads/wytherls skins/WINTER/BO.png");
 
 				double heading = Math.toRadians(headingSlider.getValue());
 				Matrix4 headingTransform = new Matrix4(new double[] { Math.cos(heading), 0, -Math.sin(heading), 0, 0, 1,
@@ -50,7 +51,7 @@ public class PlayerRender extends JPanel {
 						0, -Math.sin(pitch), Math.cos(pitch), 0, 0, 0, 0, 1 });
 
 				Matrix4 panOutTransform = new Matrix4(
-						new double[] { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, -400, 1 });
+						new double[] { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, -500, 1 });
 
 				double viewportWidth = getWidth();
 				double viewportHeight = getHeight();
@@ -136,6 +137,7 @@ public class PlayerRender extends JPanel {
 	}
 
 	public static Color getShade(Color color, double shade) {
+
 		double redLinear = Math.pow(color.getRed(), 2.4) * shade;
 		double greenLinear = Math.pow(color.getGreen(), 2.4) * shade;
 		double blueLinear = Math.pow(color.getBlue(), 2.4) * shade;
