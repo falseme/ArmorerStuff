@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JPanel;
@@ -33,8 +34,10 @@ public class PlayerRender extends JPanel {
 		JPanel renderPanel = new JPanel() {
 			private static final long serialVersionUID = 1l;
 
-			List<Triangle> tris = RenderLoader.loadSkin("D:/Usuario/Downloads/wytherls skins/WINTER/BO.png");
-//			List<Triangle> tris = RenderLoader.loadSkin(null); // test white render
+			List<Triangle> skin = RenderLoader.loadSkin("D:/Usuario/Downloads/wytherls skins/WINTER/BO.png");
+//			List<Triangle> skin = RenderLoader.loadSkin(null); // test white render
+
+			List<Triangle> armor = RenderLoader.loadArmor();
 
 			@Override
 			public void paint(Graphics g) {
@@ -67,6 +70,9 @@ public class PlayerRender extends JPanel {
 				for (int q = 0; q < zBuffer.length; q++) {
 					zBuffer[q] = Double.NEGATIVE_INFINITY;
 				}
+
+				ArrayList<Triangle> tris = new ArrayList<>(skin);
+				tris.addAll(armor);
 
 				for (Triangle t : tris) {
 					Vertex v1 = transform.transform(t.v1);

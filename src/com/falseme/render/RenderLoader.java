@@ -11,19 +11,14 @@ import javax.imageio.ImageIO;
 
 public class RenderLoader {
 
-	private static BufferedImage skin = null;
-	final static int[] triSize = { 25, 26, 27 }; // triangle sizes [0-base/ /1-overlay/ /2-armor]
+	public static String[] armor = { "netherite", "netherite", "netherite", "netherite" };
+
+	private static BufferedImage currentImage = null; // image that contains the player skin or the armor
+	final static int[] triSize = { 25, 26, 28, 27 }; // triangle sizes [0-base/ /1-overlay/ /2-armor/ /3-leggings]
 
 	public static ArrayList<Triangle> loadSkin(String skinPath) {
 
-		if (skinPath != null) {
-			try {
-				skin = ImageIO.read(new File(skinPath));
-			} catch (IOException e) {
-				e.printStackTrace();
-				skin = null;
-			}
-		}
+		loadImage(skinPath, false);
 
 		ArrayList<Triangle> tris = new ArrayList<>();
 
@@ -36,21 +31,40 @@ public class RenderLoader {
 
 	}
 
+	public static ArrayList<Triangle> loadArmor() {
+
+		ArrayList<Triangle> tris = new ArrayList<>();
+
+		loadImage("/armor/" + armor[0] + "1.png", true);
+		loadHelmet(tris);
+		loadImage("/armor/" + armor[1] + "1.png", true);
+		loadChestplate(tris);
+		loadImage("/armor/" + armor[2] + "2.png", true);
+		loadLeggings(tris);
+		loadImage("/armor/" + armor[3] + "1.png", true);
+		loadBoots(tris);
+
+		return tris;
+
+	}
+
+	// SKIN
 	private static void loadHead(List<Triangle> tris) {
 
 		// HEAD (8x8)
 		// FRONT
-		loadXYSide(tris, 8, 8, 8, 8, 40, 8, 0, -10, 4, 1, 0); // y-offset = 4(head.height/2) + 6(torso.height/2)
+		loadXYSide(tris, 8, 8, 8, 8, 40, 8, 0, -10, 4, 1, 0, triSize[0], triSize[1]); // y-offset = 4(head.height/2) +
+																						// 6(torso.height/2)
 		// BACK
-		loadXYSide(tris, 8, 8, 24, 8, 56, 8, 0, -10, -4, -1, -1);
+		loadXYSide(tris, 8, 8, 24, 8, 56, 8, 0, -10, -4, -1, -1, triSize[0], triSize[1]);
 		// LEFT
-		loadZYSide(tris, 8, 8, 16, 8, 48, 8, 4, -10, 0, -1, -1);
+		loadZYSide(tris, 8, 8, 16, 8, 48, 8, 4, -10, 0, -1, -1, triSize[0], triSize[1]);
 		// RIGHT
-		loadZYSide(tris, 8, 8, 0, 8, 32, 8, -4, -10, 0, 1, 0);
+		loadZYSide(tris, 8, 8, 0, 8, 32, 8, -4, -10, 0, 1, 0, triSize[0], triSize[1]);
 		// TOP
-		loadXZSide(tris, 8, 8, 8, 0, 40, 0, 0, -4, 0, -10);
+		loadXZSide(tris, 8, 8, 8, 0, 40, 0, 0, -4, 0, -10, triSize[0], triSize[1]);
 		// BOTTOM
-		loadXZSide(tris, 8, 8, 16, 0, 48, 0, 0, 4, 0, -10);
+		loadXZSide(tris, 8, 8, 16, 0, 48, 0, 0, 4, 0, -10, triSize[0], triSize[1]);
 
 	}
 
@@ -58,9 +72,9 @@ public class RenderLoader {
 
 		// TORSO (8x12 x4)
 		// FRONT
-		loadXYSide(tris, 8, 12, 20, 20, 20, 36, 0, 0, 2, 1, 0);
+		loadXYSide(tris, 8, 12, 20, 20, 20, 36, 0, 0, 2, 1, 0, triSize[0], triSize[1]);
 		// BACK
-		loadXYSide(tris, 8, 12, 32, 20, 32, 36, 0, 0, -2, -1, -1);
+		loadXYSide(tris, 8, 12, 32, 20, 32, 36, 0, 0, -2, -1, -1, triSize[0], triSize[1]);
 
 	}
 
@@ -69,27 +83,28 @@ public class RenderLoader {
 		// ARMS (4x12 x4-3[?])
 		// RIGHT ARM
 		// FRONT
-		loadXYSide(tris, 4, 12, 44, 20, 44, 36, -6, 0, 2, 1, 0); // x-offset = 4(torso-width/2) + 2(arm-width/2)
+		loadXYSide(tris, 4, 12, 44, 20, 44, 36, -6, 0, 2, 1, 0, triSize[0], triSize[1]); // x-offset = 4(torso-width/2)
+																							// + 2(arm-width/2)
 		// BACK
-		loadXYSide(tris, 4, 12, 52, 20, 52, 36, -6, 0, -2, -1, -1);
+		loadXYSide(tris, 4, 12, 52, 20, 52, 36, -6, 0, -2, -1, -1, triSize[0], triSize[1]);
 		// SIDE
-		loadZYSide(tris, 4, 12, 40, 20, 40, 36, -8, 0, 0, 1, 0);
+		loadZYSide(tris, 4, 12, 40, 20, 40, 36, -8, 0, 0, 1, 0, triSize[0], triSize[1]);
 		// TOP
-		loadXZSide(tris, 4, 4, 44, 16, 44, 32, -6, -6, 0, 0);
+		loadXZSide(tris, 4, 4, 44, 16, 44, 32, -6, -6, 0, 0, triSize[0], triSize[1]);
 		// BOTTOM
-		loadXZSide(tris, 4, 4, 48, 16, 48, 32, -6, 6, 0, 0);
+		loadXZSide(tris, 4, 4, 48, 16, 48, 32, -6, 6, 0, 0, triSize[0], triSize[1]);
 
 		// LEFT ARM
 		// FRONT
-		loadXYSide(tris, 4, 12, 36, 52, 52, 52, 6, 0, 2, 1, 0);
+		loadXYSide(tris, 4, 12, 36, 52, 52, 52, 6, 0, 2, 1, 0, triSize[0], triSize[1]);
 		// BACK
-		loadXYSide(tris, 4, 12, 44, 52, 60, 52, 6, 0, -2, -1, -1);
+		loadXYSide(tris, 4, 12, 44, 52, 60, 52, 6, 0, -2, -1, -1, triSize[0], triSize[1]);
 		// SIDE
-		loadZYSide(tris, 4, 12, 40, 52, 56, 52, 8, 0, 0, -1, -1);
+		loadZYSide(tris, 4, 12, 40, 52, 56, 52, 8, 0, 0, -1, -1, triSize[0], triSize[1]);
 		// TOP
-		loadXZSide(tris, 4, 4, 36, 48, 52, 48, 6, -6, 0, 0);
+		loadXZSide(tris, 4, 4, 36, 48, 52, 48, 6, -6, 0, 0, triSize[0], triSize[1]);
 		// BOTTOM
-		loadXZSide(tris, 4, 4, 40, 48, 56, 48, 6, 6, 0, 0);
+		loadXZSide(tris, 4, 4, 40, 48, 56, 48, 6, 6, 0, 0, triSize[0], triSize[1]);
 
 	}
 
@@ -98,58 +113,142 @@ public class RenderLoader {
 		// LEGS (4x12 x4)
 		// RIGHT LEG
 		// FRONT
-		loadXYSide(tris, 4, 12, 4, 20, 4, 36, -2, 12, 2, 1, 0);
+		loadXYSide(tris, 4, 12, 4, 20, 4, 36, -2, 12, 2, 1, 0, triSize[0], triSize[1]);
 		// BACK
-		loadXYSide(tris, 4, 12, 12, 20, 12, 36, -2, 12, -2, -1, -1);
+		loadXYSide(tris, 4, 12, 12, 20, 12, 36, -2, 12, -2, -1, -1, triSize[0], triSize[1]);
 		// SIDE
-		loadZYSide(tris, 4, 12, 0, 20, 0, 36, -4, 12, 0, 1, 0);
+		loadZYSide(tris, 4, 12, 0, 20, 0, 36, -4, 12, 0, 1, 0, triSize[0], triSize[1]);
 		// BOTTOM
-		loadXZSide(tris, 4, 4, 8, 16, 8, 32, -2, 18, 0, 0);
+		loadXZSide(tris, 4, 4, 8, 16, 8, 32, -2, 18, 0, 0, triSize[0], triSize[1]);
 
 		// LEFT LEG
 		// FRONT
-		loadXYSide(tris, 4, 12, 20, 52, 4, 52, 2, 12, 2, 1, 0);
+		loadXYSide(tris, 4, 12, 20, 52, 4, 52, 2, 12, 2, 1, 0, triSize[0], triSize[1]);
 		// BACK
-		loadXYSide(tris, 4, 12, 28, 52, 12, 52, 2, 12, -2, -1, -1);
+		loadXYSide(tris, 4, 12, 28, 52, 12, 52, 2, 12, -2, -1, -1, triSize[0], triSize[1]);
 		// SIDE
-		loadZYSide(tris, 4, 12, 24, 52, 8, 52, 4, 12, 0, -1, -1);
+		loadZYSide(tris, 4, 12, 24, 52, 8, 52, 4, 12, 0, -1, -1, triSize[0], triSize[1]);
 		// BOTTOM
-		loadXZSide(tris, 4, 4, 24, 48, 8, 48, 2, 18, 0, 0);
+		loadXZSide(tris, 4, 4, 24, 48, 8, 48, 2, 18, 0, 0, triSize[0], triSize[1]);
 
 	}
 
+	// ARMOR
+	private static void loadHelmet(List<Triangle> tris) {
+
+		// HELMET (8x8)
+		// FRONT
+		loadXYSide(tris, 8, 8, 8, 8, 0, 0, 0, -9, 4, 1, 0, triSize[2]);
+		// BACK
+		loadXYSide(tris, 8, 8, 24, 8, 0, 0, 0, -9, -4, -1, -1, triSize[2]);
+		// LEFT
+		loadZYSide(tris, 8, 8, 16, 8, 0, 0, 4, -9, 0, -1, -1, triSize[2]);
+		// RIGHT
+		loadZYSide(tris, 8, 8, 0, 8, 0, 0, -4, -9, 0, 1, 0, triSize[2]);
+		// TOP
+		loadXZSide(tris, 8, 8, 8, 0, 0, 0, 0, -4, 0, -9, triSize[2]);
+
+	}
+
+	private static void loadChestplate(List<Triangle> tris) {
+
+		// CHESTPLATE
+		// PRINCIPAL (8x12 x4)
+		// FRONT
+		loadXYSide(tris, 8, 12, 20, 20, 0, 0, 0, 0, 2, 1, 0, triSize[2]);
+		// BACK
+		loadXYSide(tris, 8, 12, 32, 20, 0, 0, 0, 0, -2, -1, -1, triSize[2]);
+		// LEFT
+		loadZYSide(tris, 4, 12, 28, 20, 0, 0, 4, 0, 0, 1, 0, triSize[2]); // dont know which one is correct
+		// RIGHT
+		loadZYSide(tris, 4, 12, 16, 20, 0, 0, -4, 0, 0, 1, 0, triSize[2]);
+
+		// ARMS (4x12 x4)
+		// FRONT
+		loadXYSide(tris, 4, 12, 44, 20, 0, 0, 6, 0, 2, -1, -1, triSize[2]); // LEFT
+		loadXYSide(tris, 4, 12, 44, 20, 0, 0, -6, 0, 2, 1, 0, triSize[2]); // RIGHT
+		// BACK
+		loadXYSide(tris, 4, 12, 52, 20, 0, 0, 6, 0, -2, 1, 0, triSize[2]); // LEFT
+		loadXYSide(tris, 4, 12, 52, 20, 0, 0, -6, 0, -2, -1, -1, triSize[2]); // RIGHT
+		// SIDE
+		loadZYSide(tris, 4, 12, 40, 20, 0, 0, 8, 0, 0, 1, 0, triSize[2]); // LEFT
+		loadZYSide(tris, 4, 12, 40, 20, 0, 0, -8, 0, 0, 1, 0, triSize[2]); // RIGHT
+		// TOP
+		loadXZSide(tris, 4, 4, 48, 16, 0, 0, 6, -6, 0, 0, triSize[2]); // LEFT
+		loadXZSide(tris, 4, 4, 44, 16, 0, 0, -6, -6, 0, 0, triSize[2]); // RIGHT
+
+	}
+
+	private static void loadLeggings(List<Triangle> tris) {
+
+		// LEGGINGS (4x12 x4) [x2] (top->8x5)[pos=chestplate (8x12) y-offset=0]
+		// FRONT
+		loadXYSide(tris, 8, 12, 20, 20, 0, 0, 0, 0, 2, 1, 0, triSize[3]); // TOP
+		loadXYSide(tris, 4, 12, 4, 20, 0, 0, 2, 12, 2, -1, -1, triSize[3]); // LEFT
+		loadXYSide(tris, 4, 12, 4, 20, 0, 0, -2, 12, 2, 1, 0, triSize[3]); // RIGHT
+		// BACK
+		loadXYSide(tris, 8, 12, 32, 20, 0, 0, 0, 0, -2, 1, 0, triSize[3]); // TOP
+		loadXYSide(tris, 4, 12, 12, 20, 0, 0, 2, 12, -2, 1, 0, triSize[3]); // LEFT
+		loadXYSide(tris, 4, 12, 12, 20, 0, 0, -2, 12, -2, -1, -1, triSize[3]); // RIGHT
+		// LEFT
+		loadZYSide(tris, 4, 12, 28, 20, 0, 0, 4, 0, 0, -1, -1, triSize[3]); // TOP
+		loadZYSide(tris, 4, 12, 8, 20, 0, 0, 4, 12, 0, 1, 0, triSize[3]); // LEFT
+		// RIGHT
+		loadZYSide(tris, 4, 12, 16, 20, 0, 0, -4, 0, 0, 1, 0, triSize[3]); // TOP
+		loadZYSide(tris, 4, 12, 0, 20, 0, 0, -4, 12, 0, 1, 0, triSize[3]); // RIGHT
+
+	}
+
+	private static void loadBoots(List<Triangle> tris) {
+
+		// BOOTS (4x12 x4)
+		// FRONT
+		loadXYSide(tris, 4, 12, 4, 20, 0, 0, 2, 12, 2, -1, -1, triSize[2]); // LEFT
+		loadXYSide(tris, 4, 12, 4, 20, 0, 0, -2, 12, 2, 1, 0, triSize[2]); // RIGHT
+		// BACK
+		loadXYSide(tris, 4, 12, 12, 20, 0, 0, 2, 12, -2, 1, 0, triSize[2]); // LEFT
+		loadXYSide(tris, 4, 12, 12, 20, 0, 0, -2, 12, -2, -1, -1, triSize[2]); // RIGHT
+		// LEFT
+		loadZYSide(tris, 4, 12, 0, 20, 0, 0, 4, 12, 0, 1, 0, triSize[2]);
+		// RIGHT
+		loadZYSide(tris, 4, 12, 0, 20, 0, 0, -4, 12, 0, 1, 0, triSize[2]);
+
+	}
+
+	// TRIMS
+
+	// UTIL
 	private static void loadXYSide(List<Triangle> tris, int width, int height, int xPng, int yPng, int xPngOverlay,
-			int yPngOverlay, int xOffset, int yOffset, int zOffset, int pointing, int pixelOffset) {
+			int yPngOverlay, int xOffset, int yOffset, int zOffset, int pointing, int pixelOffset, int... pixelSize) {
 
 		int x = 0, y = 0, z = 0;
 
 		for (int i = 0; i < width * height; i++) {
 
-			for (int s = 0; s < 2; s++) {
+			for (int s = 0; s < pixelSize.length; s++) {
 
-				z = triSize[s] * zOffset;
+				z = pixelSize[s] * zOffset;
 
-				x = ((i % width) * triSize[s]) - (triSize[s] * (width / 2));
-				y = triSize[s] * (i / width) - (triSize[s] * (height / 2));
+				x = ((i % width) * pixelSize[s]) - (pixelSize[s] * (width / 2));
+				y = pixelSize[s] * (i / width) - (pixelSize[s] * (height / 2));
 
 				Color color;
 				if (s > 0) { // overlay
-					color = getSkinColor(x * pointing, y, triSize[s], xPngOverlay + pixelOffset, yPngOverlay, width,
+					color = getSkinColor(x * pointing, y, pixelSize[s], xPngOverlay + pixelOffset, yPngOverlay, width,
 							height);
-					if (color == null) // transparent
-						continue;
 				} else { // base
-					color = getSkinColor(x * pointing, y, triSize[s], xPng + pixelOffset, yPng, width, height);
-					if (color == null) // transparent -> black
-						color = Color.BLACK;
+					color = getSkinColor(x * pointing, y, pixelSize[s], xPng + pixelOffset, yPng, width, height);
 				}
+				if (color == null) // transparent
+					continue;
 
-				x += triSize[0] * xOffset;
-				y += triSize[0] * yOffset;
-				tris.add(new Triangle(new Vertex(x, y, z, 1), new Vertex(x + triSize[s], y, z, 1),
-						new Vertex(x, y + triSize[s], z, 1), color));
-				tris.add(new Triangle(new Vertex(x + triSize[s], y, z, 1),
-						new Vertex(x + triSize[s], y + triSize[s], z, 1), new Vertex(x, y + triSize[s], z, 1), color));
+				x += pixelSize[0] * xOffset;
+				y += pixelSize[0] * yOffset;
+				tris.add(new Triangle(new Vertex(x, y, z, 1), new Vertex(x + pixelSize[s], y, z, 1),
+						new Vertex(x, y + pixelSize[s], z, 1), color));
+				tris.add(new Triangle(new Vertex(x + pixelSize[s], y, z, 1),
+						new Vertex(x + pixelSize[s], y + pixelSize[s], z, 1), new Vertex(x, y + pixelSize[s], z, 1),
+						color));
 
 			}
 
@@ -158,38 +257,37 @@ public class RenderLoader {
 	}
 
 	private static void loadZYSide(List<Triangle> tris, int width, int height, int xPng, int yPng, int xPngOverlay,
-			int yPngOverlay, int xOffset, int yOffset, int zOffset, int pointing, int pixelOffset) {
+			int yPngOverlay, int xOffset, int yOffset, int zOffset, int pointing, int pixelOffset, int... pixelSize) {
 
 		int x = 0, y = 0, z = 0;
 
 		for (int i = 0; i < width * height; i++) {
 
 			// base & overlay
-			for (int s = 0; s < 2; s++) {
+			for (int s = 0; s < pixelSize.length; s++) {
 
-				x = triSize[s] * xOffset;
+				x = pixelSize[s] * xOffset;
 
-				z = ((i % width) * triSize[s]) - (triSize[s] * (width / 2));
-				y = triSize[s] * (i / width) - (triSize[s] * (height / 2));
+				z = ((i % width) * pixelSize[s]) - (pixelSize[s] * (width / 2));
+				y = pixelSize[s] * (i / width) - (pixelSize[s] * (height / 2));
 
 				Color color;
 				if (s > 0) { // overlay
-					color = getSkinColor(z * pointing, y, triSize[s], xPngOverlay + pixelOffset, yPngOverlay, width,
+					color = getSkinColor(z * pointing, y, pixelSize[s], xPngOverlay + pixelOffset, yPngOverlay, width,
 							height);
-					if (color == null) // transparent
-						continue;
 				} else { // base
-					color = getSkinColor(z * pointing, y, triSize[s], xPng + pixelOffset, yPng, width, height);
-					if (color == null) // transparent -> black
-						color = Color.BLACK;
+					color = getSkinColor(z * pointing, y, pixelSize[s], xPng + pixelOffset, yPng, width, height);
 				}
+				if (color == null) // transparent
+					continue;
 
-				z += triSize[0] * zOffset;
-				y += triSize[0] * yOffset;
-				tris.add(new Triangle(new Vertex(x, y, z, 1), new Vertex(x, y, z + triSize[s], 1),
-						new Vertex(x, y + triSize[s], z, 1), color));
-				tris.add(new Triangle(new Vertex(x, y, z + triSize[s], 1),
-						new Vertex(x, y + triSize[s], z + triSize[s], 1), new Vertex(x, y + triSize[s], z, 1), color));
+				z += pixelSize[0] * zOffset;
+				y += pixelSize[0] * yOffset;
+				tris.add(new Triangle(new Vertex(x, y, z, 1), new Vertex(x, y, z + pixelSize[s], 1),
+						new Vertex(x, y + pixelSize[s], z, 1), color));
+				tris.add(new Triangle(new Vertex(x, y, z + pixelSize[s], 1),
+						new Vertex(x, y + pixelSize[s], z + pixelSize[s], 1), new Vertex(x, y + pixelSize[s], z, 1),
+						color));
 
 			}
 
@@ -198,37 +296,36 @@ public class RenderLoader {
 	}
 
 	private static void loadXZSide(List<Triangle> tris, int width, int height, int xPng, int yPng, int xPngOverlay,
-			int yPngOverlay, int xOffset, int yOffset, int zOffset, int yExOffset) {
+			int yPngOverlay, int xOffset, int yOffset, int zOffset, int yExOffset, int... pixelSize) {
 
 		int x = 0, y = 0, z = 0;
 
 		for (int i = 0; i < width * height; i++) {
 
-			for (int s = 0; s < 2; s++) {
+			for (int s = 0; s < pixelSize.length; s++) {
 
-				y = triSize[s] * yOffset;
+				y = pixelSize[s] * yOffset;
 
-				x = ((i % width) * triSize[s]) - (triSize[s] * width / 2);
-				z = triSize[s] * (i / width) - (triSize[s] * height / 2);
+				x = ((i % width) * pixelSize[s]) - (pixelSize[s] * width / 2);
+				z = pixelSize[s] * (i / width) - (pixelSize[s] * height / 2);
 
 				Color color;
 				if (s > 0) { // overlay
-					color = getSkinColor(x, z, triSize[s], xPngOverlay, yPngOverlay, width, height);
-					if (color == null) // transparent
-						continue;
+					color = getSkinColor(x, z, pixelSize[s], xPngOverlay, yPngOverlay, width, height);
 				} else { // base
-					color = getSkinColor(x, z, triSize[s], xPng, yPng, width, height);
-					if (color == null) // transparent -> black
-						color = Color.BLACK;
+					color = getSkinColor(x, z, pixelSize[s], xPng, yPng, width, height);
 				}
+				if (color == null) // transparent
+					continue;
 
-				x += triSize[0] * xOffset;
-				z += triSize[0] * zOffset;
-				y += triSize[0] * yExOffset;
-				tris.add(new Triangle(new Vertex(x, y, z, 1), new Vertex(x + triSize[s], y, z, 1),
-						new Vertex(x, y, z + triSize[s], 1), color));
-				tris.add(new Triangle(new Vertex(x + triSize[s], y, z, 1),
-						new Vertex(x + triSize[s], y, z + triSize[s], 1), new Vertex(x, y, z + triSize[s], 1), color));
+				x += pixelSize[0] * xOffset;
+				z += pixelSize[0] * zOffset;
+				y += pixelSize[0] * yExOffset;
+				tris.add(new Triangle(new Vertex(x, y, z, 1), new Vertex(x + pixelSize[s], y, z, 1),
+						new Vertex(x, y, z + pixelSize[s], 1), color));
+				tris.add(new Triangle(new Vertex(x + pixelSize[s], y, z, 1),
+						new Vertex(x + pixelSize[s], y, z + pixelSize[s], 1), new Vertex(x, y, z + pixelSize[s], 1),
+						color));
 
 			}
 
@@ -238,11 +335,31 @@ public class RenderLoader {
 
 	private static Color getSkinColor(int x, int y, int pixelSize, int xOffset, int yOffset, int width, int height) {
 
-		if (skin == null)
+		if (currentImage == null)
 			return Color.WHITE;
-		if (skin.getRGB(x / pixelSize + xOffset + (width / 2), y / pixelSize + yOffset + (height / 2)) == 0)// transparent
+		if (currentImage.getRGB(x / pixelSize + xOffset + (width / 2), y / pixelSize + yOffset + (height / 2)) == 0)// transparent
 			return null;
-		return new Color(skin.getRGB(x / pixelSize + xOffset + (width / 2), y / pixelSize + yOffset + (height / 2)));
+		return new Color(
+				currentImage.getRGB(x / pixelSize + xOffset + (width / 2), y / pixelSize + yOffset + (height / 2)));
+
+	}
+
+	private static void loadImage(String path, boolean isAsset) {
+
+		if (path == null || path.isEmpty()) {
+			currentImage = null;
+			return;
+		}
+
+		try {
+			if (isAsset)
+				currentImage = ImageIO.read(RenderLoader.class.getResource(path));
+			else
+				currentImage = ImageIO.read(new File(path));
+		} catch (IOException ex) {
+			ex.printStackTrace();
+			currentImage = null;
+		}
 
 	}
 
