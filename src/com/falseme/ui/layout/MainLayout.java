@@ -11,7 +11,7 @@ public class MainLayout extends LayoutAdapter {
 
 		int x = 0;
 		int y = 0;
-		int w = 420;
+		int w = (int) (W * 0.42);
 		x = W - w;
 		int h = H;
 

@@ -24,12 +24,16 @@ public class PlayerRender extends JPanel {
 		add(headingSlider, BorderLayout.SOUTH);
 
 		// slider to control vertical rotation
-		JSlider pitchSlider = new JSlider(SwingConstants.VERTICAL, -90, 90, 0);
+		JSlider pitchSlider = new JSlider(SwingConstants.VERTICAL, -90, 90, 1);
 		add(pitchSlider, BorderLayout.EAST);
 
 		// slider to control FoV
 		JSlider FoVSlider = new JSlider(1, 179, 60);
 		add(FoVSlider, BorderLayout.NORTH);
+
+		// slider to control general y-pos
+		JSlider yPosSlider = new JSlider(SwingConstants.VERTICAL, -400, 400, 0);
+		add(yPosSlider, BorderLayout.WEST);
 
 		JPanel renderPanel = new JPanel() {
 			private static final long serialVersionUID = 1l;
@@ -54,7 +58,7 @@ public class PlayerRender extends JPanel {
 						0, -Math.sin(pitch), Math.cos(pitch), 0, 0, 0, 0, 1 });
 
 				Matrix4 panOutTransform = new Matrix4(
-						new double[] { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, -500, 1 });
+						new double[] { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, -600, 1 });
 
 				double viewportWidth = getWidth();
 				double viewportHeight = getHeight();
@@ -71,6 +75,8 @@ public class PlayerRender extends JPanel {
 					zBuffer[q] = Double.NEGATIVE_INFINITY;
 				}
 
+				int addYPos = yPosSlider.getValue();
+
 				ArrayList<Triangle> tris = new ArrayList<>(skin);
 				tris.addAll(armor);
 
@@ -78,6 +84,10 @@ public class PlayerRender extends JPanel {
 					Vertex v1 = transform.transform(t.v1);
 					Vertex v2 = transform.transform(t.v2);
 					Vertex v3 = transform.transform(t.v3);
+
+					v1.y += addYPos;
+					v2.y += addYPos;
+					v3.y += addYPos;
 
 					Vertex ab = new Vertex(v2.x - v1.x, v2.y - v1.y, v2.z - v1.z, v2.w - v1.w);
 					Vertex ac = new Vertex(v3.x - v1.x, v3.y - v1.y, v3.z - v1.z, v3.w - v1.w);
@@ -127,6 +137,10 @@ public class PlayerRender extends JPanel {
 						}
 					}
 
+					v1.y -= addYPos;
+					v2.y -= addYPos;
+					v3.y -= addYPos;
+
 				}
 
 				g2.drawImage(img, 0, 0, null);
@@ -139,6 +153,7 @@ public class PlayerRender extends JPanel {
 		headingSlider.addChangeListener(e -> renderPanel.repaint());
 		pitchSlider.addChangeListener(e -> renderPanel.repaint());
 		FoVSlider.addChangeListener(e -> renderPanel.repaint());
+		yPosSlider.addChangeListener(e -> renderPanel.repaint());
 
 	}
 
