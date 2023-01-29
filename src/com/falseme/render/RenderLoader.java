@@ -16,6 +16,8 @@ public class RenderLoader {
 	private static BufferedImage currentImage = null; // image that contains the player skin or the armor
 	final static int[] triSize = { 25, 26, 28, 27 }; // triangle sizes [0-base/ /1-overlay/ /2-armor/ /3-leggings]
 
+	private static boolean[] doRender = { true, true, true, true };
+
 	public static ArrayList<Triangle> loadSkin(String skinPath) {
 
 		loadImage(skinPath, false);
@@ -51,6 +53,9 @@ public class RenderLoader {
 	// SKIN
 	private static void loadHead(List<Triangle> tris) {
 
+		if (!doRender[0])
+			return;
+
 		// HEAD (8x8)
 		// FRONT
 		loadXYSide(tris, 8, 8, 8, 8, 40, 8, 0, -10, 4, 1, 0, triSize[0], triSize[1]); // y-offset = 4(head.height/2) +
@@ -70,6 +75,9 @@ public class RenderLoader {
 
 	private static void loadTorso(List<Triangle> tris) {
 
+		if (!doRender[1])
+			return;
+
 		// TORSO (8x12 x4)
 		// FRONT
 		loadXYSide(tris, 8, 12, 20, 20, 20, 36, 0, 0, 2, 1, 0, triSize[0], triSize[1]);
@@ -79,6 +87,9 @@ public class RenderLoader {
 	}
 
 	private static void loadArms(List<Triangle> tris) {
+
+		if (!doRender[2])
+			return;
 
 		// ARMS (4x12 x4-3[?])
 		// RIGHT ARM
@@ -109,6 +120,9 @@ public class RenderLoader {
 	}
 
 	private static void loadLegs(List<Triangle> tris) {
+
+		if (!doRender[3])
+			return;
 
 		// LEGS (4x12 x4)
 		// RIGHT LEG
@@ -212,6 +226,9 @@ public class RenderLoader {
 		loadZYSide(tris, 4, 12, 0, 20, 0, 0, 4, 12, 0, 1, 0, triSize[2]);
 		// RIGHT
 		loadZYSide(tris, 4, 12, 0, 20, 0, 0, -4, 12, 0, 1, 0, triSize[2]);
+		// BOTTOM
+		loadXZSide(tris, 4, 4, 8, 16, 0, 0, -2, 2, 0, 16, triSize[2]); // LEFT
+		loadXZSide(tris, 4, 4, 8, 16, 0, 0, 2, 2, 0, 16, triSize[2]); // RIGHT
 
 	}
 
@@ -360,6 +377,13 @@ public class RenderLoader {
 			ex.printStackTrace();
 			currentImage = null;
 		}
+
+	}
+
+	public static void changeRender(int part) {
+
+		doRender[part] = !doRender[part];
+		PlayerRender.loadRender();
 
 	}
 

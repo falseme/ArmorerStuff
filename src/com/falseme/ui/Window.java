@@ -22,6 +22,7 @@ public class Window extends JFrame {
 		pane.setLayout(new MainLayout());
 
 		pane.add(new PlayerRender());
+		pane.add(new Body());
 
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 

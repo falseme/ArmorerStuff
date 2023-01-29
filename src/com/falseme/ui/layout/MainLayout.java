@@ -16,6 +16,7 @@ public class MainLayout extends LayoutAdapter {
 		int h = H;
 
 		c.getComponent(0).setBounds(x, y, w, h);
+		c.getComponent(1).setBounds(0, 0, (int) (W * 0.2), (int) (w * 0.4));
 
 	}
 

@@ -15,6 +15,11 @@ import javax.swing.SwingConstants;
 public class PlayerRender extends JPanel {
 	private static final long serialVersionUID = 1l;
 
+	private static JPanel renderPanel;
+	private static List<Triangle> skin = RenderLoader.loadSkin("D:/Usuario/Downloads/wytherls skins/WINTER/BO.png");
+//	List<Triangle> skin = RenderLoader.loadSkin(null); // test white render
+	private static List<Triangle> armor = RenderLoader.loadArmor();
+
 	public PlayerRender() {
 
 		setLayout(new BorderLayout());
@@ -35,13 +40,8 @@ public class PlayerRender extends JPanel {
 		JSlider yPosSlider = new JSlider(SwingConstants.VERTICAL, -400, 400, 0);
 		add(yPosSlider, BorderLayout.WEST);
 
-		JPanel renderPanel = new JPanel() {
+		renderPanel = new JPanel() {
 			private static final long serialVersionUID = 1l;
-
-			List<Triangle> skin = RenderLoader.loadSkin("D:/Usuario/Downloads/wytherls skins/WINTER/BO.png");
-//			List<Triangle> skin = RenderLoader.loadSkin(null); // test white render
-
-			List<Triangle> armor = RenderLoader.loadArmor();
 
 			@Override
 			public void paint(Graphics g) {
@@ -168,6 +168,16 @@ public class PlayerRender extends JPanel {
 		int blue = (int) Math.pow(blueLinear, 1 / 2.4);
 
 		return new Color(red, green, blue);
+	}
+
+	public static void loadRender() {
+
+		skin = RenderLoader.loadSkin("D:/Usuario/Downloads/wytherls skins/WINTER/BO.png");
+//		skin = RenderLoader.loadSkin(null); // test white render
+		armor = RenderLoader.loadArmor();
+
+		renderPanel.repaint();
+
 	}
 
 }
