@@ -9,9 +9,13 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 
+import com.falseme.gui.Assets;
+
 public class RenderLoader {
 
-	public static String[] armor = { "netherite", "netherite", "netherite", "netherite" };
+	public static int[][] armor = { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } };
+	// [n][0] = material / [n][1] = trim / [n][2] = trim-color /
+	// n = type(helmet,boots...) /
 
 	private static BufferedImage currentImage = null; // image that contains the player skin or the armor
 	final static int[] triSize = { 25, 26, 28, 27 }; // triangle sizes [0-base/ /1-overlay/ /2-armor/ /3-leggings]
@@ -20,7 +24,7 @@ public class RenderLoader {
 
 	public static ArrayList<Triangle> loadSkin(String skinPath) {
 
-		loadImage(skinPath, false);
+		loadSkinImage(skinPath);
 
 		ArrayList<Triangle> tris = new ArrayList<>();
 
@@ -37,13 +41,16 @@ public class RenderLoader {
 
 		ArrayList<Triangle> tris = new ArrayList<>();
 
-		loadImage("/armor/" + armor[0] + "1.png", true);
+		currentImage = Assets.ARMOR[0][0];
 		loadHelmet(tris);
-		loadImage("/armor/" + armor[1] + "1.png", true);
+
+		currentImage = Assets.ARMOR[0][0];
 		loadChestplate(tris);
-		loadImage("/armor/" + armor[2] + "2.png", true);
+
+		currentImage = Assets.ARMOR[0][1];
 		loadLeggings(tris);
-		loadImage("/armor/" + armor[3] + "1.png", true);
+
+		currentImage = Assets.ARMOR[0][0];
 		loadBoots(tris);
 
 		return tris;
@@ -350,6 +357,22 @@ public class RenderLoader {
 
 	}
 
+	private static void loadSkinImage(String path) {
+
+		if (path == null || path.isEmpty()) {
+			currentImage = null;
+			return;
+		}
+
+		try {
+			currentImage = ImageIO.read(new File(path));
+		} catch (IOException ex) {
+			ex.printStackTrace();
+			currentImage = null;
+		}
+
+	}
+
 	private static Color getSkinColor(int x, int y, int pixelSize, int xOffset, int yOffset, int width, int height) {
 
 		if (currentImage == null)
@@ -358,25 +381,6 @@ public class RenderLoader {
 			return null;
 		return new Color(
 				currentImage.getRGB(x / pixelSize + xOffset + (width / 2), y / pixelSize + yOffset + (height / 2)));
-
-	}
-
-	private static void loadImage(String path, boolean isAsset) {
-
-		if (path == null || path.isEmpty()) {
-			currentImage = null;
-			return;
-		}
-
-		try {
-			if (isAsset)
-				currentImage = ImageIO.read(RenderLoader.class.getResource(path));
-			else
-				currentImage = ImageIO.read(new File(path));
-		} catch (IOException ex) {
-			ex.printStackTrace();
-			currentImage = null;
-		}
 
 	}
 

@@ -21,8 +21,13 @@ public class Window extends JFrame {
 		Container pane = getContentPane();
 		pane.setLayout(new MainLayout());
 
-		pane.add(new PlayerRender());
-		pane.add(new Body());
+		pane.add(new PlayerRender()); // right pane - render
+		pane.add(new Body()); // small body representation to select the parts
+
+		// Item selection
+		for (int i = 0; i < 16; i++) {
+			pane.add(new ItemBox());
+		}
 
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 
