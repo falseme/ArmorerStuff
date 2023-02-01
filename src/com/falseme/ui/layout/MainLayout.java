@@ -21,6 +21,7 @@ public class MainLayout extends LayoutAdapter {
 		c.getComponent(1).setBounds(0, y, w, h);
 
 		// Item boxes
+		// ARMOR
 		W = x - w / 2;
 		W /= 2;
 		x = w * 3 / 5;
@@ -50,6 +51,51 @@ public class MainLayout extends LayoutAdapter {
 			}
 			N += 4;
 			x += w;
+
+		}
+
+		// RUNE SELECTION
+		W = c.getWidth();
+		W -= W * 0.42;
+		w = W / 11;
+		gap = (int) (w * 0.12);
+		w -= gap * 2;
+
+		x = gap;
+		h = w;
+		y = c.getHeight() / 2;
+
+		N = 18;
+		for (int i = 0; i < 11; i++) {
+
+			c.getComponent(N + i).setBounds(x, y, w, h);
+			x += w + gap * 2;
+
+		}
+
+		// ARMOR SELECTION
+		gap = (W - (w * 5)) / 6;
+		x = gap;
+		y += w * 2;
+
+		N = 29;
+		for (int i = 0; i < 5; i++) {
+
+			c.getComponent(N + i).setBounds(x, y, w, h);
+			x += w + gap;
+
+		}
+
+		// COLOR SELECTION
+		gap = (W - (w * 10)) / 11;
+		x = gap;
+		y += w * 2;
+
+		N = 34;
+		for (int i = 0; i < 10; i++) {
+
+			c.getComponent(N + i).setBounds(x, y, w, h);
+			x += w + gap;
 
 		}
 

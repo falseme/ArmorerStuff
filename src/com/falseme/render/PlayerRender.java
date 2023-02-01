@@ -12,6 +12,8 @@ import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.SwingConstants;
 
+import com.falseme.gui.Assets;
+
 public class PlayerRender extends JPanel {
 	private static final long serialVersionUID = 1l;
 
@@ -25,7 +27,7 @@ public class PlayerRender extends JPanel {
 		setLayout(new BorderLayout());
 
 		// slider to control horizontal rotation
-		JSlider headingSlider = new JSlider(-180, 180, 0);
+		JSlider headingSlider = new JSlider(-180, 180, 1);
 		add(headingSlider, BorderLayout.SOUTH);
 
 		// slider to control vertical rotation
@@ -33,7 +35,7 @@ public class PlayerRender extends JPanel {
 		add(pitchSlider, BorderLayout.EAST);
 
 		// slider to control FoV
-		JSlider FoVSlider = new JSlider(1, 179, 60);
+		JSlider FoVSlider = new JSlider(1, 179, 90);
 		add(FoVSlider, BorderLayout.NORTH);
 
 		// slider to control general y-pos
@@ -47,7 +49,7 @@ public class PlayerRender extends JPanel {
 			public void paint(Graphics g) {
 
 				Graphics2D g2 = (Graphics2D) g;
-				g2.setColor(Color.GRAY);
+				g2.setColor(Assets.BACKGROUND_LIGHT_COLOR);
 				g2.fillRect(0, 0, getWidth(), getHeight());
 
 				double heading = Math.toRadians(headingSlider.getValue());
