@@ -27,10 +27,10 @@ public class Loader {
 
 	public static Color[] loadPalette(String path) {
 
-		Color[] palette = new Color[8];
 		BufferedImage img = loadPng(path);
 		if (img == null)
 			return null;
+		Color[] palette = new Color[img.getWidth()];
 
 		for (int i = 0; i < palette.length; i++) {
 			palette[i] = new Color(img.getRGB(i, 0));

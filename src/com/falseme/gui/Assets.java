@@ -9,6 +9,10 @@ public class Assets {
 	public static BufferedImage[][] ITEM_ARMOR = new BufferedImage[6][4];
 	public static BufferedImage[] ARMOR_FORM = new BufferedImage[4];
 
+	public static BufferedImage[] LEATHER_OVERLAY = new BufferedImage[2];
+	public static Color[][] leatherColorPalette = new Color[17][6];
+	public static Color[][] leatherPalette = new Color[2][6];
+
 	public static BufferedImage ITEMBOX;
 	public static BufferedImage ITEMLABEL;
 
@@ -49,6 +53,13 @@ public class Assets {
 
 		ARMOR[5][0] = Loader.loadPng("/assets/armor/leather1.png");
 		ARMOR[5][1] = Loader.loadPng("/assets/armor/leather2.png");
+
+		LEATHER_OVERLAY[0] = Loader.loadPng("/assets/armor/leatherOV1.png");
+		LEATHER_OVERLAY[1] = Loader.loadPng("/assets/armor/leatherOV2.png");
+
+		leatherColorPalette[16] = Loader.loadPalette("/assets/color_palettes/leather/normal.png");
+		leatherPalette[0] = Loader.loadPalette("/assets/color_palettes/leather/leather1.png");
+		leatherPalette[1] = Loader.loadPalette("/assets/color_palettes/leather/leather2.png");
 
 		ITEM_ARMOR[0][0] = Loader.loadPng("/assets/armor/item/chainmail_helmet.png");
 		ITEM_ARMOR[0][1] = Loader.loadPng("/assets/armor/item/chainmail_chestplate.png");

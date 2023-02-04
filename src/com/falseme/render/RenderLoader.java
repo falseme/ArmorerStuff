@@ -26,7 +26,7 @@ public class RenderLoader {
 	private static BufferedImage trimImg;
 	private static Color[] trimColorPalette;
 
-	public static int leather_dye = 17;
+	public static int leather_dye = 16;
 
 	public static ArrayList<Triangle> loadSkin(String skinPath) {
 
@@ -54,6 +54,7 @@ public class RenderLoader {
 
 		ArrayList<Triangle> tris = new ArrayList<>();
 
+		// HELMET
 		if (armor[0][0] != -1) {
 			if (armor[0][1] == -1 || armor[0][2] == -1) {
 				trimImg = null;
@@ -65,7 +66,7 @@ public class RenderLoader {
 			currentImage = Assets.ARMOR[armor[0][0]][0];
 			loadHelmet(tris);
 		}
-
+		// CHESTPLATE
 		if (armor[1][0] != -1) {
 			if (armor[1][1] == -1 || armor[1][2] == -1) {
 				trimImg = null;
@@ -77,7 +78,7 @@ public class RenderLoader {
 			currentImage = Assets.ARMOR[armor[1][0]][0];
 			loadChestplate(tris);
 		}
-
+		// LEGGINGS
 		if (armor[2][0] != -1) {
 			if (armor[2][1] == -1 || armor[2][2] == -1) {
 				trimImg = null;
@@ -89,7 +90,7 @@ public class RenderLoader {
 			currentImage = Assets.ARMOR[armor[2][0]][1];
 			loadLeggings(tris);
 		}
-
+		// BOOTS
 		if (armor[3][0] != -1) {
 			if (armor[3][1] == -1 || armor[3][2] == -1) {
 				trimImg = null;
@@ -489,7 +490,20 @@ public class RenderLoader {
 			return Color.WHITE;
 		if (currentImage.getRGB(cx, cy) == 0)// transparent
 			return null;
-		return new Color(currentImage.getRGB(cx, cy));
+		Color color = new Color(currentImage.getRGB(cx, cy));
+		if (currentImage == Assets.ARMOR[5][0] || currentImage == Assets.ARMOR[5][1]) { // leather armor
+
+			int index = (currentImage == Assets.ARMOR[5][0]) ? 0 : 1;
+
+			for (int i = 0; i < 6; i++) {
+				if (compareColors(Assets.leatherPalette[index][i], color)) {
+					color = Assets.leatherColorPalette[leather_dye][i];
+					break;
+				}
+			}
+
+		}
+		return color;
 
 	}
 
