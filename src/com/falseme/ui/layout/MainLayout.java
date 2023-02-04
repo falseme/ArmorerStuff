@@ -63,7 +63,9 @@ public class MainLayout extends LayoutAdapter {
 
 		x = gap;
 		h = w;
-		y = c.getHeight() / 2;
+		y = c.getHeight() * 2 / 5;
+
+		int GAP = gap * 3;
 
 		N = 18;
 		for (int i = 0; i < 11; i++) {
@@ -74,12 +76,12 @@ public class MainLayout extends LayoutAdapter {
 		}
 
 		// ARMOR SELECTION
-		gap = (W - (w * 5)) / 6;
+		gap = (W - (w * 6)) / 7;
 		x = gap;
-		y += w * 2;
+		y += w + GAP;
 
 		N = 29;
-		for (int i = 0; i < 5; i++) {
+		for (int i = 0; i < 6; i++) {
 
 			c.getComponent(N + i).setBounds(x, y, w, h);
 			x += w + gap;
@@ -89,15 +91,34 @@ public class MainLayout extends LayoutAdapter {
 		// COLOR SELECTION
 		gap = (W - (w * 10)) / 11;
 		x = gap;
-		y += w * 2;
+		y += w + GAP;
 
-		N = 34;
+		N = 35;
 		for (int i = 0; i < 10; i++) {
 
 			c.getComponent(N + i).setBounds(x, y, w, h);
 			x += w + gap;
 
 		}
+
+		// DYE SELECTION
+		gap = (W - (w * 8)) / 9;
+		y += w + GAP;
+
+		N = 45;
+		for (int i = 0; i < 2; i++) {
+			x = gap;
+			for (int j = 0; j < 8; j++) {
+
+				c.getComponent(N + j).setBounds(x, y, w, h);
+				x += w + gap;
+
+			}
+			N += 8;
+			y += w + GAP / 2;
+			gap = (W - (w * 9)) / 10;
+		}
+		c.getComponent(N).setBounds(x, y - (w + GAP / 2), w, h);
 
 	}
 

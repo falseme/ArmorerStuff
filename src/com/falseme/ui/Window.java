@@ -52,22 +52,24 @@ public class Window extends JFrame {
 
 		// Rune selection
 		for (int i = 0; i < 11; i++) {
-
 			pane.add(new ItemBox(new Item(Item.ItemType.rune, Assets.RUNE[i], 1, 0, i), false, null));
-
 		}
 
 		// Armor selection
-		for (int i = 0; i < 5; i++) {
+		for (int i = 0; i < 6; i++) {
 			pane.add(new ItemBox(new Item(Item.ItemType.armor, Assets.ITEM_ARMOR[i][0], 1, 1, i), false, null));
 		}
 
 		// Material selection
 		for (int i = 0; i < 10; i++) {
-
 			pane.add(new ItemBox(new Item(Item.ItemType.mineral, Assets.MATERIAL[i], 1, 2, i), false, null));
-
 		}
+
+		// Dye select
+		for (int i = 0; i < 16; i++) {
+			pane.add(new ItemBox(new Item(Item.ItemType.dye, Assets.DYES[i], 2, i), false, null));
+		}
+		pane.add(new ItemBox(new Item(Item.ItemType.dye, Assets.X, 2, 17), false, null));
 
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 

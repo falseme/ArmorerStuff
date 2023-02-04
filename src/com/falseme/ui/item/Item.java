@@ -6,7 +6,7 @@ public class Item {
 
 	public enum ItemType {
 
-		armor, rune, mineral, none;
+		armor, rune, mineral, dye, none;
 
 	}
 

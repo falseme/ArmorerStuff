@@ -7,6 +7,7 @@ import java.awt.image.BufferedImage;
 
 import com.falseme.gui.Assets;
 import com.falseme.render.PlayerRender;
+import com.falseme.render.RenderLoader;
 import com.falseme.ui.item.Item;
 import com.falseme.ui.item.ItemBox;
 
@@ -16,6 +17,7 @@ public class ItemBoxMouseColoredEvent extends MouseAdapter {
 
 	private ItemBox ib;
 	private static ItemBox BOX_SELECTED = null;
+	private static ItemBox DYE_SELECTED = null;
 
 	public ItemBoxMouseColoredEvent(ItemBox ib) {
 
@@ -35,7 +37,7 @@ public class ItemBoxMouseColoredEvent extends MouseAdapter {
 		if (!in)
 			return;
 
-		if (e.getButton() == MouseEvent.BUTTON3) {
+		if (e.getButton() == MouseEvent.BUTTON3 && ib != DYE_SELECTED) {
 
 			// unselect a box
 			if (BOX_SELECTED != null) {
@@ -51,6 +53,20 @@ public class ItemBoxMouseColoredEvent extends MouseAdapter {
 
 				PlayerRender.loadRender();
 			}
+
+			return;
+
+		}
+
+		// DYE SELECTION
+		if (ib.getItem().params[0] == 2) { // Then is in DYE SECTION
+
+			RenderLoader.leather_dye = ib.getItem().params[1];
+			if (DYE_SELECTED != null)
+				DYE_SELECTED.setBackground(new Color(0, 0, 0, 0));
+
+			ib.setBackground(new Color(1f, 1f, 0.2f, 0.08f));
+			DYE_SELECTED = ib;
 
 			return;
 
@@ -109,7 +125,7 @@ public class ItemBoxMouseColoredEvent extends MouseAdapter {
 	@Override
 	public void mouseExited(MouseEvent e) {
 		in = false;
-		if (ib != BOX_SELECTED)
+		if (ib != BOX_SELECTED && ib != DYE_SELECTED)
 			ib.setBackground(new Color(0, 0, 0, 0));
 	}
 

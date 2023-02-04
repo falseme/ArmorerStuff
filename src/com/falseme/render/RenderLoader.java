@@ -26,6 +26,8 @@ public class RenderLoader {
 	private static BufferedImage trimImg;
 	private static Color[] trimColorPalette;
 
+	public static int leather_dye = 17;
+
 	public static ArrayList<Triangle> loadSkin(String skinPath) {
 
 		loadSkinImage(skinPath);
