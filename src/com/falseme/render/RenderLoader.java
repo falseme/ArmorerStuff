@@ -140,6 +140,14 @@ public class RenderLoader {
 		loadXYSide(tris, 8, 12, 20, 20, 20, 36, 0, 0, 2, 1, 0, false, triSize[0], triSize[1]);
 		// BACK
 		loadXYSide(tris, 8, 12, 32, 20, 32, 36, 0, 0, -2, -1, -1, false, triSize[0], triSize[1]);
+		// LEFT
+		loadZYSide(tris, 4, 12, 28, 20, 28, 36, 4, 0, 0, -1, -1, false, triSize[0], triSize[1]);
+		// RIGHT
+		loadZYSide(tris, 4, 12, 16, 20, 16, 36, -4, 0, 0, 1, 0, false, triSize[0], triSize[1]);
+		// TOP
+		loadXZSide(tris, 8, 4, 20, 16, 20, 32, 0, -6, 0, 0, false, triSize[0], triSize[1]);
+		// BOTTOM
+		loadXZSide(tris, 8, 4, 28, 16, 28, 32, 0, 6, 0, 0, false, triSize[0], triSize[1]);
 
 	}
 
@@ -158,6 +166,8 @@ public class RenderLoader {
 		loadXYSide(tris, 4, 12, 52, 20, 52, 36, -6, 0, -2, -1, -1, false, triSize[0], triSize[1]);
 		// SIDE
 		loadZYSide(tris, 4, 12, 40, 20, 40, 36, -8, 0, 0, 1, 0, false, triSize[0], triSize[1]);
+		// INSIDE
+		loadZYSide(tris, 4, 12, 48, 20, 48, 36, -4, 0, 0, -1, -1, false, triSize[0], triSize[1]);
 		// TOP
 		loadXZSide(tris, 4, 4, 44, 16, 44, 32, -6, -6, 0, 0, false, triSize[0], triSize[1]);
 		// BOTTOM
@@ -170,6 +180,8 @@ public class RenderLoader {
 		loadXYSide(tris, 4, 12, 44, 52, 60, 52, 6, 0, -2, -1, -1, false, triSize[0], triSize[1]);
 		// SIDE
 		loadZYSide(tris, 4, 12, 40, 52, 56, 52, 8, 0, 0, -1, -1, false, triSize[0], triSize[1]);
+		// INSIDE
+		loadZYSide(tris, 4, 12, 32, 52, 48, 52, 4, 0, 0, 1, 0, false, triSize[0], triSize[1]);
 		// TOP
 		loadXZSide(tris, 4, 4, 36, 48, 52, 48, 6, -6, 0, 0, false, triSize[0], triSize[1]);
 		// BOTTOM
@@ -190,6 +202,8 @@ public class RenderLoader {
 		loadXYSide(tris, 4, 12, 12, 20, 12, 36, -2, 12, -2, -1, -1, false, triSize[0], triSize[1]);
 		// SIDE
 		loadZYSide(tris, 4, 12, 0, 20, 0, 36, -4, 12, 0, 1, 0, false, triSize[0], triSize[1]);
+		// TOP
+		loadXZSide(tris, 4, 4, 4, 16, 4, 32, -2, 6, 0, 0, false, triSize[0], triSize[1]);
 		// BOTTOM
 		loadXZSide(tris, 4, 4, 8, 16, 8, 32, -2, 18, 0, 0, false, triSize[0], triSize[1]);
 
@@ -200,6 +214,8 @@ public class RenderLoader {
 		loadXYSide(tris, 4, 12, 28, 52, 12, 52, 2, 12, -2, -1, -1, false, triSize[0], triSize[1]);
 		// SIDE
 		loadZYSide(tris, 4, 12, 24, 52, 8, 52, 4, 12, 0, -1, -1, false, triSize[0], triSize[1]);
+		// TOP
+		loadXZSide(tris, 4, 4, 20, 48, 4, 48, 2, 6, 0, 0, false, triSize[0], triSize[1]);
 		// BOTTOM
 		loadXZSide(tris, 4, 4, 24, 48, 8, 48, 2, 18, 0, 0, false, triSize[0], triSize[1]);
 
@@ -264,7 +280,7 @@ public class RenderLoader {
 		loadXYSide(tris, 4, 12, 12, 20, 0, 0, -2, 12, -2, -1, -1, true, triSize[3]); // RIGHT
 		// LEFT
 		loadZYSide(tris, 4, 12, 28, 20, 0, 0, 4, 0, 0, -1, -1, true, triSize[3]); // TOP
-		loadZYSide(tris, 4, 12, 8, 20, 0, 0, 4, 12, 0, 1, 0, true, triSize[3]); // LEFT
+		loadZYSide(tris, 4, 12, 0, 20, 0, 0, 4, 12, 0, 1, 0, true, triSize[3]); // LEFT
 		// RIGHT
 		loadZYSide(tris, 4, 12, 16, 20, 0, 0, -4, 0, 0, 1, 0, true, triSize[3]); // TOP
 		loadZYSide(tris, 4, 12, 0, 20, 0, 0, -4, 12, 0, 1, 0, true, triSize[3]); // RIGHT
