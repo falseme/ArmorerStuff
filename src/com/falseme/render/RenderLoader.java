@@ -459,7 +459,6 @@ public class RenderLoader {
 				color = new Color(trim.getRGB(cx, cy));
 				if (compareColors(Assets.trimPalette[i], color)) {
 					color = trimColorPalette[i];
-					System.out.println("-");
 					break;
 				}
 			}
@@ -485,7 +484,6 @@ public class RenderLoader {
 
 	private static boolean compareColors(Color c1, Color c2) {
 
-		System.out.println(c1.getRed() + " - " + c2.getRed());
 		if (c1.getRed() == c2.getRed() && c1.getGreen() == c2.getGreen() && c1.getBlue() == c2.getBlue())
 			return true;
 		return false;

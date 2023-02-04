@@ -35,12 +35,32 @@ public class ItemBoxMouseColoredEvent extends MouseAdapter {
 		if (!in)
 			return;
 
+		if (e.getButton() == MouseEvent.BUTTON3) {
+
+			// unselect a box
+			if (BOX_SELECTED != null) {
+				BOX_SELECTED.setBackground(new Color(0, 0, 0, 0));
+				BOX_SELECTED = null;
+			}
+
+			// empty a box
+			if (ib.getItem().params[0] == 0) {
+				int[] params = ib.getItem().params;
+				params[2] = -1;
+				ib.empty(ib.getItem().type, params);
+
+				PlayerRender.loadRender();
+			}
+
+			return;
+
+		}
+
 		if (BOX_SELECTED == null) {
 
 			ib.setBackground(new Color(1f, 1f, 1f, 0.08f));
 			BOX_SELECTED = ib;
 
-//		} else if (ib.getClass() == BOX_SELECTED.getClass()) {
 		} else if (ib.getItem().params[0] == BOX_SELECTED.getItem().params[0]) {
 			// ARE THE IN THE SAME LINE
 

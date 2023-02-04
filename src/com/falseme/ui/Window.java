@@ -34,7 +34,7 @@ public class Window extends JFrame {
 
 		// Item selection
 		for (int i = 0; i < 4; i++) {
-			ItemBox leftIconBox = new ItemBox(new Item(Item.ItemType.none, Assets.ARMOR_FORM[i], 0, -1), true, null);
+			ItemBox leftIconBox = new ItemBox(new Item(Item.ItemType.none, Assets.ARMOR_FORM[i], -1, -1), true, null);
 			pane.add(leftIconBox);
 			userBoxes.add(leftIconBox);
 			ItemBox runeBox = new ItemBox(new Item(Item.ItemType.rune, null, 0, 0, -1), false, Assets.RUNE_FORM);
