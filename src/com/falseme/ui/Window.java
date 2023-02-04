@@ -2,6 +2,7 @@ package com.falseme.ui;
 
 import java.awt.Container;
 import java.awt.Dimension;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
 
@@ -13,6 +14,8 @@ import com.falseme.ui.layout.MainLayout;
 
 public class Window extends JFrame {
 	private static final long serialVersionUID = 1l;
+
+	public static ArrayList<ItemBox> userBoxes = new ArrayList<>();
 
 	public Window() {
 
@@ -31,10 +34,20 @@ public class Window extends JFrame {
 
 		// Item selection
 		for (int i = 0; i < 4; i++) {
-			pane.add(new ItemBox(new Item(Item.ItemType.none, Assets.ARMOR_FORM[i], 0, -1), true, null));
-			pane.add(new ItemBox(new Item(Item.ItemType.rune, null, 0, 0, -1), false, null));
-			pane.add(new ItemBox(new Item(Item.ItemType.armor, null, 0, 1, -1, i), false, Assets.ARMOR_FORM[i]));
-			pane.add(new ItemBox(new Item(Item.ItemType.mineral, null, 0, 2, -1), false, null));
+			ItemBox leftIconBox = new ItemBox(new Item(Item.ItemType.none, Assets.ARMOR_FORM[i], 0, -1), true, null);
+			pane.add(leftIconBox);
+			userBoxes.add(leftIconBox);
+			ItemBox runeBox = new ItemBox(new Item(Item.ItemType.rune, null, 0, 0, -1), false, Assets.RUNE_FORM);
+			pane.add(runeBox);
+			userBoxes.add(runeBox);
+			ItemBox armorBox = new ItemBox(new Item(Item.ItemType.armor, null, 0, 1, -1, i), false,
+					Assets.ARMOR_FORM[i]);
+			pane.add(armorBox);
+			userBoxes.add(armorBox);
+			ItemBox materialBox = new ItemBox(new Item(Item.ItemType.mineral, null, 0, 2, -1), false,
+					Assets.MATERIAL_FORM);
+			pane.add(materialBox);
+			userBoxes.add(materialBox);
 		}
 
 		// Rune selection

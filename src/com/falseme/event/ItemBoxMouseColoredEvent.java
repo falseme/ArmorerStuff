@@ -6,6 +6,7 @@ import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 
 import com.falseme.gui.Assets;
+import com.falseme.render.PlayerRender;
 import com.falseme.ui.item.Item;
 import com.falseme.ui.item.ItemBox;
 
@@ -73,6 +74,8 @@ public class ItemBoxMouseColoredEvent extends MouseAdapter {
 			userBox.setItem(new Item(userBox.getItem().type, texture, params));
 
 			BOX_SELECTED = null;
+
+			PlayerRender.loadRender();
 
 		}
 

@@ -20,7 +20,8 @@ public class PlayerRender extends JPanel {
 	private static JPanel renderPanel;
 	private static List<Triangle> skin = RenderLoader.loadSkin("D:/Usuario/Downloads/wytherls skins/WINTER/BO.png");
 //	List<Triangle> skin = RenderLoader.loadSkin(null); // test white render
-	private static List<Triangle> armor = RenderLoader.loadArmor();
+	private static List<Triangle> armor = new ArrayList<>();
+//	private static List<Triangle> armor = RenderLoader.loadArmor();
 
 	public PlayerRender() {
 
