@@ -57,6 +57,22 @@ public class Assets {
 		LEATHER_OVERLAY[0] = Loader.loadPng("/assets/armor/leatherOV1.png");
 		LEATHER_OVERLAY[1] = Loader.loadPng("/assets/armor/leatherOV2.png");
 
+		leatherColorPalette[0] = Loader.loadPalette("/assets/color_palettes/leather/normal.png");
+		leatherColorPalette[1] = Loader.loadPalette("/assets/color_palettes/leather/normal.png");
+		leatherColorPalette[2] = Loader.loadPalette("/assets/color_palettes/leather/normal.png");
+		leatherColorPalette[3] = Loader.loadPalette("/assets/color_palettes/leather/normal.png");
+		leatherColorPalette[4] = Loader.loadPalette("/assets/color_palettes/leather/normal.png");
+		leatherColorPalette[5] = Loader.loadPalette("/assets/color_palettes/leather/normal.png");
+		leatherColorPalette[6] = Loader.loadPalette("/assets/color_palettes/leather/normal.png");
+		leatherColorPalette[7] = Loader.loadPalette("/assets/color_palettes/leather/normal.png");
+		leatherColorPalette[8] = Loader.loadPalette("/assets/color_palettes/leather/normal.png");
+		leatherColorPalette[9] = Loader.loadPalette("/assets/color_palettes/leather/normal.png");
+		leatherColorPalette[10] = Loader.loadPalette("/assets/color_palettes/leather/normal.png");
+		leatherColorPalette[11] = Loader.loadPalette("/assets/color_palettes/leather/normal.png");
+		leatherColorPalette[12] = Loader.loadPalette("/assets/color_palettes/leather/normal.png");
+		leatherColorPalette[13] = Loader.loadPalette("/assets/color_palettes/leather/normal.png");
+		leatherColorPalette[14] = Loader.loadPalette("/assets/color_palettes/leather/normal.png");
+		leatherColorPalette[15] = Loader.loadPalette("/assets/color_palettes/leather/normal.png");
 		leatherColorPalette[16] = Loader.loadPalette("/assets/color_palettes/leather/normal.png");
 		leatherPalette[0] = Loader.loadPalette("/assets/color_palettes/leather/leather1.png");
 		leatherPalette[1] = Loader.loadPalette("/assets/color_palettes/leather/leather2.png");

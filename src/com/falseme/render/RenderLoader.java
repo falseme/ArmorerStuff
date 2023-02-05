@@ -495,11 +495,19 @@ public class RenderLoader {
 
 			int index = (currentImage == Assets.ARMOR[5][0]) ? 0 : 1;
 
-			for (int i = 0; i < 6; i++) {
-				if (compareColors(Assets.leatherPalette[index][i], color)) {
-					color = Assets.leatherColorPalette[leather_dye][i];
-					break;
+			if (Assets.LEATHER_OVERLAY[index].getRGB(cx, cy) == 0) { // no leather overlay
+
+				for (int i = 0; i < 6; i++) {
+					if (compareColors(Assets.leatherPalette[index][i], color)) {
+						color = Assets.leatherColorPalette[leather_dye][i];
+						break;
+					}
 				}
+
+			} else { // leather overlay
+
+				color = new Color(Assets.LEATHER_OVERLAY[index].getRGB(cx, cy));
+
 			}
 
 		}

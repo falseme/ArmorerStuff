@@ -68,6 +68,8 @@ public class ItemBoxMouseColoredEvent extends MouseAdapter {
 			ib.setBackground(new Color(1f, 1f, 0.2f, 0.08f));
 			DYE_SELECTED = ib;
 
+			PlayerRender.loadRender();
+
 			return;
 
 		}
