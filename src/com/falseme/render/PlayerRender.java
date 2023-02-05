@@ -9,10 +9,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JPanel;
-import javax.swing.JSlider;
 import javax.swing.SwingConstants;
 
 import com.falseme.gui.Assets;
+import com.falseme.ui.Slider;
 
 public class PlayerRender extends JPanel {
 	private static final long serialVersionUID = 1l;
@@ -28,19 +28,19 @@ public class PlayerRender extends JPanel {
 		setLayout(new BorderLayout());
 
 		// slider to control horizontal rotation
-		JSlider headingSlider = new JSlider(-180, 180, 1);
+		Slider headingSlider = new Slider(-180, 180, 1);
 		add(headingSlider, BorderLayout.SOUTH);
 
 		// slider to control vertical rotation
-		JSlider pitchSlider = new JSlider(SwingConstants.VERTICAL, -90, 90, 1);
+		Slider pitchSlider = new Slider(SwingConstants.VERTICAL, -90, 90, 1);
 		add(pitchSlider, BorderLayout.EAST);
 
 		// slider to control FoV
-		JSlider FoVSlider = new JSlider(1, 179, 90);
+		Slider FoVSlider = new Slider(1, 179, 90);
 		add(FoVSlider, BorderLayout.NORTH);
 
 		// slider to control general y-pos
-		JSlider yPosSlider = new JSlider(SwingConstants.VERTICAL, -400, 400, 0);
+		Slider yPosSlider = new Slider(SwingConstants.VERTICAL, -400, 400, 0);
 		add(yPosSlider, BorderLayout.WEST);
 
 		renderPanel = new JPanel() {

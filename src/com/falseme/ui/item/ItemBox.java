@@ -60,7 +60,7 @@ public class ItemBox extends JComponent {
 		int size = (int) (getWidth() * 0.7);
 		int pos = (getWidth() - size) / 2;
 
-		if (placeHolder != null)
+		if (placeHolder != null && item.texture == null)
 			g.drawImage(placeHolder, pos, pos, size, size, null);
 
 		if (item != null)
