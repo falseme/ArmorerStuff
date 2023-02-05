@@ -14,33 +14,34 @@ public class MainLayout extends LayoutAdapter {
 		int w = (int) (W * 0.42);
 		x = W - w;
 		int h = H;
-		c.getComponent(0).setBounds(x, y, w, h);
+		c.getComponent(0).setBounds(x, y, w, h); // player render panel
 
+		// DIVIDE LEFT SIDE IN TWO PARTS
+		W -= w; // left side width
 		w = (int) (W * 0.2);
-		h = (int) (W * 0.2);
-		c.getComponent(1).setBounds(0, y, w, h);
+		H = w * 67 / 45; // Top side height // calculated based on the BodyLayout components
 
-		// Item boxes
-		// ARMOR
-		W = x - w / 2;
-		W /= 2;
-		x = w * 3 / 5;
+		// BODYPARTS SELECTION
+		c.getComponent(1).setBounds(0, 0, w, H);
 
-		w = W / 4;
-		int gap = (int) (w * 0.2);
-		w -= gap * 2;
-
+		// INVENTORY
+		w = W / 14; // ItemBox width
+		h = w; // ItemBox height
+		int gap = (int) (w * 0.2); // gap between 'selection' ItemBoxes
+		x = (int) (W * 0.2); // x -> next to the 'body parts' section
+		int W2 = (W - x) / 2; // divide top section in two
+		gap = (W2 - w * 4) / 11;
 		x += gap;
-		y = gap * 2;
-		h = w;
+		y = H / 2 - (h + gap);
 
-		int X = x; // temp
+		// dispose the 4 armor inventory sections
+		int tempX = x;
 		int N = 2;
 		for (int i = 0; i < 4; i++) {
 
-			if (i % 2 == 0 && i != 0) {
-				y += w * 2;
-				x = X;
+			if (i == 2) {
+				y += h + gap * 2;
+				x = tempX;
 			}
 
 			for (int n = 0; n < 4; n++) {
@@ -54,56 +55,45 @@ public class MainLayout extends LayoutAdapter {
 
 		}
 
+		// BOTTOM SECTION - ITEM SELECT SECTION
 		// RUNE SELECTION
-		W = c.getWidth();
-		W -= W * 0.42;
-		w = W / 11;
-		gap = (int) (w * 0.12);
-		w -= gap * 2;
+		H = c.getHeight() - H; // Bottom section height
+		int ygap = (H - h * 5) / 6;
+		gap = (W - w * 11) / 12;
 
 		x = gap;
-		h = w;
-		y = c.getHeight() * 2 / 5;
-
-		int GAP = gap * 3;
-
+		y = c.getHeight() - H + ygap;
 		N = 18;
 		for (int i = 0; i < 11; i++) {
-
 			c.getComponent(N + i).setBounds(x, y, w, h);
-			x += w + gap * 2;
-
+			x += w + gap + 1; // trunc int cause bigger errors, just a few pixels.
 		}
 
 		// ARMOR SELECTION
-		gap = (W - (w * 6)) / 7;
+		gap = (W - w * 6) / 7;
 		x = gap;
-		y += w + GAP;
+		y += h + ygap;
 
 		N = 29;
 		for (int i = 0; i < 6; i++) {
-
 			c.getComponent(N + i).setBounds(x, y, w, h);
 			x += w + gap;
-
 		}
 
-		// COLOR SELECTION
-		gap = (W - (w * 10)) / 11;
+		// MATERIAL SELECTION
+		gap = (W - w * 10) / 11;
 		x = gap;
-		y += w + GAP;
+		y += h + ygap;
 
 		N = 35;
 		for (int i = 0; i < 10; i++) {
-
 			c.getComponent(N + i).setBounds(x, y, w, h);
 			x += w + gap;
-
 		}
 
 		// DYE SELECTION
-		gap = (W - (w * 8)) / 9;
-		y += w + GAP;
+		gap = (W - w * 8) / 9;
+		y += h + ygap;
 
 		N = 45;
 		for (int i = 0; i < 2; i++) {
@@ -115,10 +105,10 @@ public class MainLayout extends LayoutAdapter {
 
 			}
 			N += 8;
-			y += w + GAP / 2;
+			y += h + ygap;
 			gap = (W - (w * 9)) / 10;
 		}
-		c.getComponent(N).setBounds(x, y - (w + GAP / 2), w, h);
+		c.getComponent(N).setBounds(x, y - (h + ygap), w, h);
 
 	}
 

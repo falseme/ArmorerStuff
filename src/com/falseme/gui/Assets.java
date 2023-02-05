@@ -29,6 +29,7 @@ public class Assets {
 	public static Color[][] trimColor = new Color[10][8];
 
 	public static BufferedImage X;
+	public static BufferedImage ICON;
 
 	// colors
 	public static Color BACKGROUND_COLOR = new Color(69, 69, 69);
@@ -194,6 +195,7 @@ public class Assets {
 		DYES[15] = Loader.loadPng("/assets/dyes/black_dye.png");
 
 		X = Loader.loadPng("/assets/x.png");
+		ICON = Loader.loadPng("/assets/icon.png");
 
 	}
 

@@ -2,6 +2,7 @@ package com.falseme.ui;
 
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.Image;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
@@ -23,6 +24,10 @@ public class Window extends JFrame {
 		setPreferredSize(dim);
 		setMinimumSize(dim);
 		setLocationRelativeTo(null);
+
+		Image icon = Assets.ICON;
+		setIconImage(icon);
+		setTitle("Armorer's stuff");
 
 		Container pane = getContentPane();
 		pane.setLayout(new MainLayout());

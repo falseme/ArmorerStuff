@@ -7,7 +7,7 @@ public class BodyLayout extends LayoutAdapter {
 	@Override
 	public void layoutContainer(Container c) {
 
-		int w = c.getWidth() / 5;
+		int w = c.getWidth() / 3;
 		int W = w * 4 / 3;
 		int gap = w / 5;
 
