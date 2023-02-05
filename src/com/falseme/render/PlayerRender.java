@@ -2,14 +2,21 @@ package com.falseme.render;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Cursor;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
 
 import com.falseme.gui.Assets;
 import com.falseme.ui.Slider;
@@ -17,8 +24,10 @@ import com.falseme.ui.Slider;
 public class PlayerRender extends JPanel {
 	private static final long serialVersionUID = 1l;
 
+	private static String SKIN_PATH = null;
+
 	private static JPanel renderPanel;
-	private static List<Triangle> skin = RenderLoader.loadSkin("D:/Usuario/Downloads/wytherls skins/WINTER/BO.png");
+	private static List<Triangle> skin = RenderLoader.loadSkin(SKIN_PATH);
 //	List<Triangle> skin = RenderLoader.loadSkin(null); // test white render
 	private static List<Triangle> armor = new ArrayList<>();
 //	private static List<Triangle> armor = RenderLoader.loadArmor();
@@ -42,6 +51,35 @@ public class PlayerRender extends JPanel {
 		// slider to control general y-pos
 		Slider yPosSlider = new Slider(SwingConstants.VERTICAL, -400, 400, 0);
 		add(yPosSlider, BorderLayout.WEST);
+
+		// button to import skin
+		JButton btn = new JButton("Import skin");
+		btn.setBackground(Assets.BACKGROUND_LIGHT_COLOR.brighter());
+		btn.setBorder(null);
+		btn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btn.setFont(new Font("Dialog", Font.BOLD, 10));
+		int w = 70, h = 20;
+		addComponentListener(new ComponentAdapter() {
+			@Override
+			public void componentResized(ComponentEvent e) {
+				btn.setBounds(getWidth() - pitchSlider.getWidth() - 10 - w,
+						getHeight() - headingSlider.getHeight() - 10 - h, w, h);
+			}
+		});
+		add(btn);
+		btn.addActionListener(e -> {
+			try {
+				UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+			JFileChooser chooser = new JFileChooser();
+			chooser.showOpenDialog(null);
+			if (chooser.getSelectedFile() == null)
+				return;
+			SKIN_PATH = chooser.getSelectedFile().getAbsolutePath();
+			loadRender();
+		});
 
 		renderPanel = new JPanel() {
 			private static final long serialVersionUID = 1l;
@@ -148,6 +186,8 @@ public class PlayerRender extends JPanel {
 
 				g2.drawImage(img, 0, 0, null);
 
+				btn.repaint();
+
 			}
 
 		};
@@ -160,7 +200,7 @@ public class PlayerRender extends JPanel {
 
 	}
 
-	public static Color getShade(Color color, double shade) {
+	private static Color getShade(Color color, double shade) {
 
 		double redLinear = Math.pow(color.getRed(), 2.4) * shade;
 		double greenLinear = Math.pow(color.getGreen(), 2.4) * shade;
@@ -175,8 +215,7 @@ public class PlayerRender extends JPanel {
 
 	public static void loadRender() {
 
-		skin = RenderLoader.loadSkin("D:/Usuario/Downloads/wytherls skins/WINTER/BO.png");
-//		skin = RenderLoader.loadSkin(null); // test white render
+		skin = RenderLoader.loadSkin(SKIN_PATH);
 		armor = RenderLoader.loadArmor();
 
 		renderPanel.repaint();
