@@ -69,7 +69,7 @@ public class Window extends JFrame {
 		for (int i = 0; i < 16; i++) {
 			pane.add(new ItemBox(new Item(Item.ItemType.dye, Assets.DYES[i], 2, i), false, null));
 		}
-		pane.add(new ItemBox(new Item(Item.ItemType.dye, Assets.X, 2, 17), false, null));
+		pane.add(new ItemBox(new Item(Item.ItemType.dye, Assets.X, 2, 16), false, null));
 
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 
