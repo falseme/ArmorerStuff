@@ -39,19 +39,25 @@ public class MainLayout extends LayoutAdapter {
 		int N = 2;
 		for (int i = 0; i < 4; i++) {
 
-			if (i == 2) {
-				y += h + gap * 2;
-				x = tempX;
+			int tempY;
+
+			if (i % 2 == 0) {
+				tempY = y;
+				if (i == 2)
+					x += w;
+			} else {
+				tempY = y + h + gap * 2;
+				if (i == 1)
+					x = tempX;
+				else
+					x -= 4 * (w + gap);
 			}
 
 			for (int n = 0; n < 4; n++) {
-
-				c.getComponent(N + n).setBounds(x, y, w, h);
+				c.getComponent(N + n).setBounds(x, tempY, w, h);
 				x += w + gap;
-
 			}
 			N += 4;
-			x += w;
 
 		}
 
