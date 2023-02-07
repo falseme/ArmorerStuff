@@ -13,7 +13,7 @@
 
 #### Armorer's Stuff
 
-Import your skin, select different armor sets and chose your favorite one.
+Import your skin, select different armor sets and choose your favorite one.
 
 ------------
 
