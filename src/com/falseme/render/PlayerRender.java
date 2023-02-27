@@ -20,6 +20,7 @@ import javax.swing.UIManager;
 
 import com.falseme.gui.Assets;
 import com.falseme.ui.Slider;
+import com.falseme.user.Config;
 
 public class PlayerRender extends JPanel {
 	private static final long serialVersionUID = 1l;
@@ -73,11 +74,12 @@ public class PlayerRender extends JPanel {
 			} catch (Exception ex) {
 				ex.printStackTrace();
 			}
-			JFileChooser chooser = new JFileChooser();
+			JFileChooser chooser = new JFileChooser(Config.getSkinPath());
 			chooser.showOpenDialog(null);
 			if (chooser.getSelectedFile() == null)
 				return;
 			SKIN_PATH = chooser.getSelectedFile().getAbsolutePath();
+			Config.setSkinPath(SKIN_PATH);
 			loadRender();
 		});
 
