@@ -14,6 +14,8 @@ import com.falseme.ui.Window;
 
 public class RenderLoader {
 
+	private static boolean slim = false;
+
 	public static int[][] armor = { { 0, 0, 0 }, { 2, 0, 0 }, { 0, 0, 0 }, { 1, 0, 0 } };
 	// [n][0] = material / [n][1] = trim / [n][2] = trim-color /
 	// n = type(helmet,boots...) /
@@ -157,7 +159,41 @@ public class RenderLoader {
 		if (!doRender[2])
 			return;
 
-		// ARMS (4x12 x4-3[?])
+		// SLIM SKIN
+		// ARMS (4x12 x3)
+		if (slim) {
+			// RIGHT ARM
+			// FRONT
+			loadXYSide(tris, 3, 12, 44, 20, 44, 36, -6, 0, 2, 1, 0, false, triSize[0], triSize[1]);
+			// BACK
+			loadXYSide(tris, 3, 12, 51, 20, 52, 36, -6, 0, -2, -1, -1, false, triSize[0], triSize[1]);
+			// SIDE
+			loadZYSide(tris, 4, 12, 40, 20, 40, 36, -7, 0, 0, 1, 0, false, triSize[0], triSize[1]);
+			// INSIDE
+			loadZYSide(tris, 4, 12, 47, 20, 47, 36, -4, 0, 0, -1, -1, false, triSize[0], triSize[1]);
+			// TOP
+			loadXZSide(tris, 3, 4, 44, 16, 44, 32, -5.5, -6, 0, 0, false, triSize[0], triSize[1]);
+			// BOTTOM
+			loadXZSide(tris, 3, 4, 47, 16, 47, 32, -5.5, 6, 0, 0, false, triSize[0], triSize[1]);
+
+			// LEFT ARM
+			// FRONT
+			loadXYSide(tris, 3, 12, 36, 52, 52, 52, 5, 0, 2, 1, 0, false, triSize[0], triSize[1]);
+			// BACK
+			loadXYSide(tris, 3, 12, 43, 52, 60, 52, 5, 0, -2, -1, -1, false, triSize[0], triSize[1]);
+			// SIDE
+			loadZYSide(tris, 4, 12, 39, 52, 55, 52, 7, 0, 0, -1, -1, false, triSize[0], triSize[1]);
+			// INSIDE
+			loadZYSide(tris, 4, 12, 32, 52, 48, 52, 4, 0, 0, 1, 0, false, triSize[0], triSize[1]);
+			// TOP
+			loadXZSide(tris, 3, 4, 36, 48, 52, 48, 5.5, -6, 0, 0, false, triSize[0], triSize[1]);
+			// BOTTOM
+			loadXZSide(tris, 3, 4, 39, 48, 55, 48, 5.5, 6, 0, 0, false, triSize[0], triSize[1]);
+
+			return;
+		}
+
+		// ARMS (4x12 x4)
 		// RIGHT ARM
 		// FRONT
 		loadXYSide(tris, 4, 12, 44, 20, 44, 36, -6, 0, 2, 1, 0, false, triSize[0], triSize[1]); // x-offset =
@@ -404,7 +440,8 @@ public class RenderLoader {
 	}
 
 	private static void loadXZSide(List<Triangle> tris, int width, int height, int xPng, int yPng, int xPngOverlay,
-			int yPngOverlay, int xOffset, int yOffset, int zOffset, int yExOffset, boolean drawTrim, int... pixelSize) {
+			int yPngOverlay, double xOffset, int yOffset, int zOffset, int yExOffset, boolean drawTrim,
+			int... pixelSize) {
 
 		int x = 0, y = 0, z = 0;
 
@@ -450,6 +487,7 @@ public class RenderLoader {
 
 		if (path == null || path.isEmpty()) {
 			currentImage = null;
+			slim = false;
 			return;
 		}
 
@@ -458,6 +496,23 @@ public class RenderLoader {
 		} catch (IOException ex) {
 			ex.printStackTrace();
 			currentImage = null;
+		}
+
+		// slim skin??
+		slim = true;
+		for (int x = 0; x < 2; x++) {
+			for (int y = 0; y < 12; y++) {
+				// right arm
+				if (currentImage.getRGB(54 + x, 20 + y) != 0) { // if not transparent
+					slim = false;
+					return;
+				}
+				// left arm
+				if (currentImage.getRGB(46 + x, 52 + y) != 0) { // if not transparent
+					slim = false;
+					return;
+				}
+			}
 		}
 
 	}
