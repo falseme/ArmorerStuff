@@ -17,12 +17,12 @@ public class Assets {
 	public static BufferedImage ITEMBOX;
 	public static BufferedImage ITEMLABEL;
 
-	public static BufferedImage[] RUNE = new BufferedImage[11];
+	public static BufferedImage[] RUNE = new BufferedImage[16];
 	public static BufferedImage RUNE_FORM;
 	public static BufferedImage[] MATERIAL = new BufferedImage[10];
 	public static BufferedImage MATERIAL_FORM;
 
-	public static BufferedImage[][] ARMOR_TRIM = new BufferedImage[11][2];
+	public static BufferedImage[][] ARMOR_TRIM = new BufferedImage[16][2];
 
 	public static BufferedImage[] DYES = new BufferedImage[16];
 
@@ -129,6 +129,11 @@ public class Assets {
 		RUNE[8] = Loader.loadPng("/assets/runes/snout.png");
 		RUNE[9] = Loader.loadPng("/assets/runes/eye.png");
 		RUNE[10] = Loader.loadPng("/assets/runes/spire.png");
+		RUNE[11] = Loader.loadPng("/assets/runes/wayfinder.png");
+		RUNE[12] = Loader.loadPng("/assets/runes/raiser.png");
+		RUNE[13] = Loader.loadPng("/assets/runes/shaper.png");
+		RUNE[14] = Loader.loadPng("/assets/runes/host.png");
+		RUNE[15] = Loader.loadPng("/assets/runes/silence.png");
 		RUNE_FORM = Loader.loadPng("/assets/runes/form.png");
 
 		MATERIAL[0] = Loader.loadPng("/assets/materials/iron.png");
@@ -165,6 +170,16 @@ public class Assets {
 		ARMOR_TRIM[9][1] = Loader.loadPng("/assets/trims/eye_leggings.png");
 		ARMOR_TRIM[10][0] = Loader.loadPng("/assets/trims/spire.png");
 		ARMOR_TRIM[10][1] = Loader.loadPng("/assets/trims/spire_leggings.png");
+		ARMOR_TRIM[11][0] = Loader.loadPng("/assets/trims/wayfinder.png");
+		ARMOR_TRIM[11][1] = Loader.loadPng("/assets/trims/wayfinder_leggings.png");
+		ARMOR_TRIM[12][0] = Loader.loadPng("/assets/trims/raiser.png");
+		ARMOR_TRIM[12][1] = Loader.loadPng("/assets/trims/raiser_leggings.png");
+		ARMOR_TRIM[13][0] = Loader.loadPng("/assets/trims/shaper.png");
+		ARMOR_TRIM[13][1] = Loader.loadPng("/assets/trims/shaper_leggings.png");
+		ARMOR_TRIM[14][0] = Loader.loadPng("/assets/trims/host.png");
+		ARMOR_TRIM[14][1] = Loader.loadPng("/assets/trims/host_leggings.png");
+		ARMOR_TRIM[15][0] = Loader.loadPng("/assets/trims/silence.png");
+		ARMOR_TRIM[15][1] = Loader.loadPng("/assets/trims/silence_leggings.png");
 
 		trimColor[0] = Loader.loadPalette("/assets/color_palettes/iron.png");
 		trimColor[1] = Loader.loadPalette("/assets/color_palettes/copper.png");
@@ -176,7 +191,6 @@ public class Assets {
 		trimColor[7] = Loader.loadPalette("/assets/color_palettes/redstone.png");
 		trimColor[8] = Loader.loadPalette("/assets/color_palettes/amethyst.png");
 		trimColor[9] = Loader.loadPalette("/assets/color_palettes/quartz.png");
-
 		darkTrimColor.put(0, Loader.loadPalette("/assets/color_palettes/iron_darker.png"));
 		darkTrimColor.put(2, Loader.loadPalette("/assets/color_palettes/gold_darker.png"));
 		darkTrimColor.put(5, Loader.loadPalette("/assets/color_palettes/diamond_darker.png"));

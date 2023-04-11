@@ -64,9 +64,10 @@ public class MainLayout extends LayoutAdapter {
 		// BOTTOM SECTION - ITEM SELECT SECTION
 		// RUNE SELECTION
 		H = c.getHeight() - H; // Bottom section height
-		int ygap = (H - h * 5) / 6;
+		int ygap = (H - h * 6) / 7;
 		gap = (W - w * 11) / 12;
 
+		// pre 23w12a
 		x = gap;
 		y = c.getHeight() - H + ygap;
 		N = 18;
@@ -74,13 +75,22 @@ public class MainLayout extends LayoutAdapter {
 			c.getComponent(N + i).setBounds(x, y, w, h);
 			x += w + gap + 1; // trunc int cause bigger errors, just a few pixels.
 		}
+		// post 23w12a
+		gap = (W - w * 5) / 6;
+		x = gap;
+		y += h + ygap * 0.5;
+		N += 11;
+		for (int i = 0; i < 5; i++) {
+			c.getComponent(N + i).setBounds(x, y, w, h);
+			x += w + gap + 1;
+		}
 
 		// ARMOR SELECTION
 		gap = (W - w * 6) / 7;
 		x = gap;
 		y += h + ygap;
 
-		N = 29;
+		N += 5;
 		for (int i = 0; i < 6; i++) {
 			c.getComponent(N + i).setBounds(x, y, w, h);
 			x += w + gap;
@@ -91,7 +101,7 @@ public class MainLayout extends LayoutAdapter {
 		x = gap;
 		y += h + ygap;
 
-		N = 35;
+		N += 6;
 		for (int i = 0; i < 10; i++) {
 			c.getComponent(N + i).setBounds(x, y, w, h);
 			x += w + gap;
@@ -101,7 +111,7 @@ public class MainLayout extends LayoutAdapter {
 		gap = (W - w * 8) / 9;
 		y += h + ygap;
 
-		N = 45;
+		N += 10;
 		for (int i = 0; i < 2; i++) {
 			x = gap;
 			for (int j = 0; j < 8; j++) {
@@ -111,10 +121,10 @@ public class MainLayout extends LayoutAdapter {
 
 			}
 			N += 8;
-			y += h + ygap;
+			y += h + ygap * 0.5;
 			gap = (W - (w * 9)) / 10;
 		}
-		c.getComponent(N).setBounds(x, y - (h + ygap), w, h);
+		c.getComponent(N).setBounds(x, (int) (y - (h + ygap * 0.5)), w, h);
 
 	}
 

@@ -56,7 +56,7 @@ public class Window extends JFrame {
 		}
 
 		// Rune selection
-		for (int i = 0; i < 11; i++) {
+		for (int i = 0; i < 16; i++) {
 			pane.add(new ItemBox(new Item(Item.ItemType.rune, Assets.RUNE[i], 1, 0, i), false, null));
 		}
 
