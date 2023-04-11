@@ -2,6 +2,7 @@ package com.falseme.gui;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
+import java.util.HashMap;
 
 public class Assets {
 
@@ -27,6 +28,7 @@ public class Assets {
 
 	public static Color[] trimPalette = new Color[8];
 	public static Color[][] trimColor = new Color[10][8];
+	public static HashMap<Integer, Color[]> darkTrimColor = new HashMap<>();
 
 	public static BufferedImage X;
 	public static BufferedImage ICON;
@@ -175,7 +177,12 @@ public class Assets {
 		trimColor[8] = Loader.loadPalette("/assets/color_palettes/amethyst.png");
 		trimColor[9] = Loader.loadPalette("/assets/color_palettes/quartz.png");
 
-		trimPalette = Loader.loadPalette("/assets/color_palettes/trim.png");
+		darkTrimColor.put(0, Loader.loadPalette("/assets/color_palettes/iron_darker.png"));
+		darkTrimColor.put(2, Loader.loadPalette("/assets/color_palettes/gold_darker.png"));
+		darkTrimColor.put(5, Loader.loadPalette("/assets/color_palettes/diamond_darker.png"));
+		darkTrimColor.put(6, Loader.loadPalette("/assets/color_palettes/netherite_darker.png"));
+
+		trimPalette = Loader.loadPalette("/assets/color_palettes/trim_palette.png");
 
 		DYES[0] = Loader.loadPng("/assets/dyes/white_dye.png");
 		DYES[1] = Loader.loadPng("/assets/dyes/orange_dye.png");
@@ -196,6 +203,8 @@ public class Assets {
 
 		X = Loader.loadPng("/assets/x.png");
 		ICON = Loader.loadPng("/assets/icon.png");
+
+		System.out.println("ASSETS LOADED");
 
 	}
 

@@ -63,7 +63,7 @@ public class RenderLoader {
 				trimColorPalette = null;
 			} else {
 				trimImg = Assets.ARMOR_TRIM[armor[0][1]][0];
-				trimColorPalette = Assets.trimColor[armor[0][2]];
+				trimColorPalette = loadTrimColorPalette(armor[0][2], armor[0][0]);
 			}
 			currentImage = Assets.ARMOR[armor[0][0]][0];
 			loadHelmet(tris);
@@ -75,7 +75,7 @@ public class RenderLoader {
 				trimColorPalette = null;
 			} else {
 				trimImg = Assets.ARMOR_TRIM[armor[1][1]][0];
-				trimColorPalette = Assets.trimColor[armor[1][2]];
+				trimColorPalette = loadTrimColorPalette(armor[1][2], armor[1][0]);
 			}
 			currentImage = Assets.ARMOR[armor[1][0]][0];
 			loadChestplate(tris);
@@ -87,7 +87,7 @@ public class RenderLoader {
 				trimColorPalette = null;
 			} else {
 				trimImg = Assets.ARMOR_TRIM[armor[2][1]][1];
-				trimColorPalette = Assets.trimColor[armor[2][2]];
+				trimColorPalette = loadTrimColorPalette(armor[2][2], armor[2][0]);
 			}
 			currentImage = Assets.ARMOR[armor[2][0]][1];
 			loadLeggings(tris);
@@ -99,7 +99,7 @@ public class RenderLoader {
 				trimColorPalette = null;
 			} else {
 				trimImg = Assets.ARMOR_TRIM[armor[3][1]][0];
-				trimColorPalette = Assets.trimColor[armor[3][2]];
+				trimColorPalette = loadTrimColorPalette(armor[3][2], armor[3][0]);
 			}
 			currentImage = Assets.ARMOR[armor[3][0]][0];
 			loadBoots(tris);
@@ -584,5 +584,33 @@ public class RenderLoader {
 		return false;
 
 	}
+
+	/*
+	 * @param trimIndex Index in the original trim color palette list. The hashmap
+	 * with darker colors uses the same index.
+	 * 
+	 * @param armorIndex Index in the armor textures list. Used to compare the
+	 * materials so as to pick the darker color.
+	 */
+	private static Color[] loadTrimColorPalette(int trimIndex, int armorIndex) {
+
+		// compare if the material is the same
+		boolean sameMaterial = false;
+		for (int[] indexes : sameMaterialIndexes) {
+			if (armorIndex == indexes[0] && trimIndex == indexes[1])
+				sameMaterial = true;
+		}
+		// return the original color or a darker version if necessary
+		if (sameMaterial)
+			return Assets.darkTrimColor.get(trimIndex);
+		else
+			return Assets.trimColor[trimIndex];
+
+	}
+
+	// list of indexes comparisons between the armor material and the trim
+	// material in which they are the same.
+	// this is the order: (iron, gold, diamond, netherite) - (armor, trim).
+	private static int[][] sameMaterialIndexes = { { 1, 0 }, { 2, 2 }, { 3, 5 }, { 4, 6 } };
 
 }

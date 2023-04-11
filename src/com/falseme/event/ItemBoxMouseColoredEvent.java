@@ -93,6 +93,8 @@ public class ItemBoxMouseColoredEvent extends MouseAdapter {
 			ib.setBackground(new Color(0, 0, 0, 0));
 			BOX_SELECTED.setBackground(new Color(0, 0, 0, 0));
 
+			// check which box has the pickable item
+			// userBox is the box with the wearing armor
 			ItemBox userBox, selectBox;
 			if (ib.getItem().params[0] == 0) {
 				userBox = ib;

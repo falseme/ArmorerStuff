@@ -15,6 +15,10 @@ public class Item {
 	public BufferedImage texture;
 	public int[] params;
 
+	/*
+	 * @param param Item params in order: pickable(0,1), ItemType(asOrderedInt),
+	 * AssetsListIndex(i or -1)))
+	 */
 	public Item(ItemType type, BufferedImage texture, int... param) {
 		this.type = type;
 		this.texture = texture;
