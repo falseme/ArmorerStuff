@@ -28,12 +28,18 @@ public class PlayerRender extends JPanel {
 	private static String SKIN_PATH = null;
 
 	private static JPanel renderPanel;
-	private static List<Triangle> skin = RenderLoader.loadSkin(SKIN_PATH);
+	private static List<Triangle> skin;
 //	List<Triangle> skin = RenderLoader.loadSkin(null); // test white render
 	private static List<Triangle> armor = new ArrayList<>();
 //	private static List<Triangle> armor = RenderLoader.loadArmor();
 
 	public PlayerRender() {
+
+		// load skin
+		SKIN_PATH = Config.getSkinPath();
+		if (!SKIN_PATH.endsWith(".png"))
+			SKIN_PATH = null;
+		skin = RenderLoader.loadSkin(SKIN_PATH);
 
 		setLayout(new BorderLayout());
 
