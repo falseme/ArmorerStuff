@@ -48,23 +48,45 @@ public class ItemBox extends JComponent {
 		this.item = item;
 	}
 
+	public int getClickSize() {
+
+		double dim;
+		double factor = 0.8;
+		if (getWidth() <= getWidth())
+			dim = getWidth() * factor;
+		else
+			dim = getHeight() * factor;
+
+		return (int) dim;
+	}
+
 	public void paintComponent(Graphics g) {
 
+		int S;
+		if (getWidth() <= getHeight())
+			S = getWidth();
+		else
+			S = getHeight();
+		int size = (int) (S * 0.8);
+		int x = (getWidth() - size) / 2;
+		int y = (getHeight() - size) / 2;
+
 		if (!isStatic)
-			g.drawImage(background, 0, 0, getWidth(), getHeight(), null);
+			g.drawImage(background, x, y, size, size, null);
 		g.setColor(getBackground());
-		g.fillRect(0, 0, getWidth(), getHeight());
+		g.fillRect(x, y, size, size);
 
 		// item & placeholder
 
-		int size = (int) (getWidth() * 0.7);
-		int pos = (getWidth() - size) / 2;
+		int itemsize = (int) (size * 0.7);
+		int posx = (getWidth() - itemsize) / 2;
+		int posy = (getHeight() - itemsize) / 2;
 
 		if (placeHolder != null && item.texture == null)
-			g.drawImage(placeHolder, pos, pos, size, size, null);
+			g.drawImage(placeHolder, posx, posy, itemsize, itemsize, null);
 
 		if (item != null)
-			g.drawImage(item.texture, pos, pos, size, size, null);
+			g.drawImage(item.texture, posx, posy, itemsize, itemsize, null);
 
 	}
 
