@@ -15,8 +15,8 @@ public class RenderLoader {
 
 	private static boolean slim = false;
 
-	public static int[][] armor = { { -1, -1, -1 }, { -1, -1, -1 }, { -1, -1, -1 }, { -1, -1, -1 } };
-	// [n][0] = material / [n][1] = trim / [n][2] = trim-color /
+	public static int[][] armor = { { -1, -1, -1, 16 }, { -1, -1, -1, 16 }, { -1, -1, -1, 16 }, { -1, -1, -1, 16 } };
+	// [n][0] = material / [n][1] = trim / [n][2] = trim-color / [n][3] = armor-dye
 	// n = type(helmet,boots...) /
 
 	private static BufferedImage currentImage = null; // image that contains the player skin or the armor
@@ -79,6 +79,7 @@ public class RenderLoader {
 				trimColorPalette = loadTrimColorPalette(armor[0][2], armor[0][0]);
 			}
 			currentImage = Assets.ARMOR[armor[0][0]][0];
+			leather_dye = armor[0][3];
 			loadHelmet(tris);
 		}
 		// CHESTPLATE
@@ -91,6 +92,7 @@ public class RenderLoader {
 				trimColorPalette = loadTrimColorPalette(armor[1][2], armor[1][0]);
 			}
 			currentImage = Assets.ARMOR[armor[1][0]][0];
+			leather_dye = armor[1][3];
 			loadChestplate(tris);
 		}
 		// LEGGINGS
@@ -103,6 +105,7 @@ public class RenderLoader {
 				trimColorPalette = loadTrimColorPalette(armor[2][2], armor[2][0]);
 			}
 			currentImage = Assets.ARMOR[armor[2][0]][1];
+			leather_dye = armor[2][3];
 			loadLeggings(tris);
 		}
 		// BOOTS
@@ -115,6 +118,7 @@ public class RenderLoader {
 				trimColorPalette = loadTrimColorPalette(armor[3][2], armor[3][0]);
 			}
 			currentImage = Assets.ARMOR[armor[3][0]][0];
+			leather_dye = armor[3][3];
 			loadBoots(tris);
 		}
 

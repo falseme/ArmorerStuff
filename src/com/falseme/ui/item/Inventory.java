@@ -54,6 +54,13 @@ public class Inventory extends JComponent {
 		for (int i = 0; i < minerals.length; i++) {
 			minerals[i] = new Item(ItemType.mineral, Assets.MATERIAL[i], i);
 		}
+		
+		//DYES
+		
+		Item[] dyes = new Item[Assets.DYES.length];
+		for(int i=0; i<dyes.length; i++) {
+			dyes[i] = new Item(ItemType.dye, Assets.DYES[i], i);
+		}
 
 		// --- INVENTORY LAYOUT ---//
 
@@ -62,24 +69,40 @@ public class Inventory extends JComponent {
 		add(new ItemBox(HELMET_SLOT, Assets.ARMOR_FORM[0], helmets));
 		add(new ItemBox(HELMET_SLOT, Assets.RUNE_FORM, trims));
 		add(new ItemBox(HELMET_SLOT, Assets.MATERIAL_FORM, minerals));
+		add(new ItemBox(HELMET_SLOT, Assets.DYES[0], dyes));
+		add(new ItemBox());
+		add(new ItemBox());
+		add(new ItemBox());
 
 		// CHESTPLATE
 
 		add(new ItemBox(CHESTPLATE_SLOT, Assets.ARMOR_FORM[1], chestplates));
 		add(new ItemBox(CHESTPLATE_SLOT, Assets.RUNE_FORM, trims));
 		add(new ItemBox(CHESTPLATE_SLOT, Assets.MATERIAL_FORM, minerals));
+		add(new ItemBox(CHESTPLATE_SLOT, Assets.DYES[0], dyes));
+		add(new ItemBox());
+		add(new ItemBox());
+		add(new ItemBox());
 
 		// LEGGINGS
 
 		add(new ItemBox(LEGGINGS_SLOT, Assets.ARMOR_FORM[2], leggings));
 		add(new ItemBox(LEGGINGS_SLOT, Assets.RUNE_FORM, trims));
 		add(new ItemBox(LEGGINGS_SLOT, Assets.MATERIAL_FORM, minerals));
+		add(new ItemBox(LEGGINGS_SLOT, Assets.DYES[0], dyes));
+		add(new ItemBox());
+		add(new ItemBox());
+		add(new ItemBox());
 
 		// BOOTS
 
 		add(new ItemBox(BOOTS_SLOT, Assets.ARMOR_FORM[3], boots));
 		add(new ItemBox(BOOTS_SLOT, Assets.RUNE_FORM, trims));
 		add(new ItemBox(BOOTS_SLOT, Assets.MATERIAL_FORM, minerals));
+		add(new ItemBox(BOOTS_SLOT, Assets.DYES[0], dyes));
+		add(new ItemBox());
+		add(new ItemBox());
+		add(new ItemBox());
 
 	}
 
