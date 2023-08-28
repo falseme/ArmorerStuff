@@ -3,20 +3,16 @@ package com.falseme.ui;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Image;
-import java.util.ArrayList;
 
 import javax.swing.JFrame;
 
 import com.falseme.gui.Assets;
 import com.falseme.render.PlayerRender;
 import com.falseme.ui.item.Inventory;
-import com.falseme.ui.item.ItemBox;
 import com.falseme.ui.layout.MainLayout;
 
 public class Window extends JFrame {
 	private static final long serialVersionUID = 1l;
-
-	public static ArrayList<ItemBox> userBoxes = new ArrayList<>();
 
 	public Window() {
 

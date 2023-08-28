@@ -10,7 +10,6 @@ import javax.swing.JComponent;
 import com.falseme.event.ItemBoxMouseColoredEvent;
 import com.falseme.event.ItemBoxPopupEvent;
 import com.falseme.gui.Assets;
-import com.falseme.ui.item.Item.ItemType;
 
 public class ItemBox extends JComponent {
 	private static final long serialVersionUID = 1l;
@@ -18,6 +17,8 @@ public class ItemBox extends JComponent {
 	protected BufferedImage background, placeHolder;
 	protected Item[] items;
 	protected Item item;
+	
+	private int inventorySlot;
 
 	private boolean listitem = false;
 
@@ -36,9 +37,11 @@ public class ItemBox extends JComponent {
 		
 	}
 	
-	public ItemBox(BufferedImage placeHolder, Item... items) {
+	public ItemBox(int invSlot, BufferedImage placeHolder, Item... items) {
 
 		this();
+		
+		inventorySlot = invSlot;
 		
 		this.placeHolder = placeHolder;
 		this.items = items;
@@ -60,10 +63,10 @@ public class ItemBox extends JComponent {
 		
 	}
 
-	public void empty(ItemType type, int... params) {
-		item = new Item(type, null, params);
+	public int getInventorySlot() {
+		return inventorySlot;
 	}
-
+	
 	public boolean isListItem() {
 		return listitem;
 	}

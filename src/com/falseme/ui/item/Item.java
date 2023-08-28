@@ -6,23 +6,40 @@ public class Item {
 
 	public enum ItemType {
 
-		armor, rune, mineral, dye, none;
+		armor(0), rune(1), mineral(2), dye(3), none(-1);
+
+		private int indexvalue;
+
+		private ItemType(int value) {
+			this.indexvalue = value;
+		}
+
+		public int getIndexValue() {
+			return indexvalue;
+		}
 
 	}
 
 	public ItemType type;
 
 	public BufferedImage texture;
-	public int[] params;
+	public int param;
 
 	/*
-	 * @param param Item params in order: pickable(0,1), ItemType(asOrderedInt),
-	 * AssetsListIndex(i or -1)))
+	 * @param param Item param determined by the following conditions:
+	 * 	if (armor):
+	 * 		param = armor-material
+	 * 	if (rune/trim):
+	 * 		param = trim-item
+	 * 	if (mineral):
+	 * 		param = mineral-item
+	 * 	if (dye):
+	 * 		param dye-item
 	 */
-	public Item(ItemType type, BufferedImage texture, int... param) {
+	public Item(ItemType type, BufferedImage texture, int param) {
 		this.type = type;
 		this.texture = texture;
-		params = param;
+		this.param = param;
 	}
 
 }

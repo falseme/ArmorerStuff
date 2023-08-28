@@ -10,13 +10,12 @@ import java.util.List;
 import javax.imageio.ImageIO;
 
 import com.falseme.gui.Assets;
-import com.falseme.ui.Window;
 
 public class RenderLoader {
 
 	private static boolean slim = false;
 
-	public static int[][] armor = { { 0, 0, 0 }, { 2, 0, 0 }, { 0, 0, 0 }, { 1, 0, 0 } };
+	public static int[][] armor = { { -1, -1, -1 }, { -1, -1, -1 }, { -1, -1, -1 }, { -1, -1, -1 } };
 	// [n][0] = material / [n][1] = trim / [n][2] = trim-color /
 	// n = type(helmet,boots...) /
 
@@ -45,14 +44,28 @@ public class RenderLoader {
 
 	}
 
-	public static ArrayList<Triangle> loadArmor() {
+	/*
+	 * @param armorInventorySlot - the slot index (helmet, chestplate, leggings,
+	 * boots)
+	 * 
+	 * @param paramIndex - the param index (armor-material, armor-trim, trim-color)
+	 * 
+	 * @param param - the param value (if 'paramIndex' = 0 then 'param' represents
+	 * the armor-material value)
+	 * 
+	 * @see Assets
+	 * 
+	 * @see RenderLoader.armor
+	 */
+	public static void loadArmor(int armorInventorySlot, int paramIndex, int param) {
 
-		for (int i = 0; i < 4; i++) {
-			int n = i * 4;
-			armor[i][0] = Window.userBoxes.get(2 + n).getItem().params[2]; // armor-material
-			armor[i][1] = Window.userBoxes.get(1 + n).getItem().params[2]; // trim
-			armor[i][2] = Window.userBoxes.get(3 + n).getItem().params[2]; // trim-color
-		}
+		armor[armorInventorySlot][paramIndex] = param;
+
+		PlayerRender.loadRender();
+
+	}
+
+	public static ArrayList<Triangle> loadArmorAssets() {
 
 		ArrayList<Triangle> tris = new ArrayList<>();
 

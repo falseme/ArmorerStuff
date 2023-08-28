@@ -6,6 +6,7 @@ import javax.swing.JPopupMenu;
 import javax.swing.border.LineBorder;
 
 import com.falseme.gui.Assets;
+import com.falseme.render.RenderLoader;
 import com.falseme.ui.item.Item;
 import com.falseme.ui.item.ItemBox;
 
@@ -32,7 +33,10 @@ public class ItemBoxPopupEvent extends ItemBoxEvent {
 			popup.setVisible(false);
 
 			SELECTED_BOX.setItem(ib.getItem());
-			
+
+			RenderLoader.loadArmor(SELECTED_BOX.getInventorySlot(), ib.getItem().type.getIndexValue(),
+					ib.getItem().param);
+
 			SELECTED_BOX = null;
 
 			return;
