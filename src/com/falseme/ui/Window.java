@@ -32,7 +32,8 @@ public class Window extends JFrame {
 
 		pane.add(new PlayerRender()); // right pane - render
 		pane.add(new Body()); // small body representation to select the parts
-		pane.add(new Inventory());
+		Inventory inv = new Inventory();
+		pane.add(inv);
 
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 

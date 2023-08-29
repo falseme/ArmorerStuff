@@ -54,15 +54,16 @@ public class Inventory extends JComponent {
 		for (int i = 0; i < minerals.length; i++) {
 			minerals[i] = new Item(ItemType.mineral, Assets.MATERIAL[i], i);
 		}
-		
-		//DYES
-		
-		Item[] dyes = new Item[Assets.DYES.length];
-		for(int i=0; i<dyes.length; i++) {
+
+		// DYES
+
+		Item[] dyes = new Item[Assets.DYES.length + 1];
+		for (int i = 0; i < dyes.length - 1; i++) {
 			dyes[i] = new Item(ItemType.dye, Assets.DYES[i], i);
 		}
+		dyes[dyes.length - 1] = new Item(ItemType.dye, Assets.X, dyes.length - 1);
 
-		// --- INVENTORY LAYOUT ---//
+		// --- INVENTORY LAYOUT --- //
 
 		// HELMET
 
