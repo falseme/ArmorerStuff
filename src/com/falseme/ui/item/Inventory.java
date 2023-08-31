@@ -1,6 +1,7 @@
 package com.falseme.ui.item;
 
 import java.awt.GridLayout;
+import java.util.LinkedList;
 
 import javax.swing.JComponent;
 
@@ -13,11 +14,6 @@ public class Inventory extends JComponent {
 	public Inventory() {
 
 		setLayout(new GridLayout(4, 7));
-
-		final int HELMET_SLOT = 0;
-		final int CHESTPLATE_SLOT = 1;
-		final int LEGGINGS_SLOT = 2;
-		final int BOOTS_SLOT = 3;
 
 		// ARMOR
 
@@ -65,45 +61,43 @@ public class Inventory extends JComponent {
 
 		// --- INVENTORY LAYOUT --- //
 
-		// HELMET
+		LinkedList<ItemBox> itemboxes = new LinkedList<ItemBox>();
 
-		add(new ItemBox(HELMET_SLOT, Assets.ARMOR_FORM[0], helmets));
-		add(new ItemBox(HELMET_SLOT, Assets.RUNE_FORM, trims));
-		add(new ItemBox(HELMET_SLOT, Assets.MATERIAL_FORM, minerals));
-		add(new ItemBox(HELMET_SLOT, Assets.DYES[0], dyes));
-		add(new ItemBox());
-		add(new ItemBox());
-		add(new ItemBox());
+		// LOAD ITEM BOXES
 
-		// CHESTPLATE
+//		SLOT: HELMET_SLOT = 0;
+//		SLOT: CHESTPLATE_SLOT = 1;
+//		SLOT: LEGGINGS_SLOT = 2;
+//		SLOT: BOOTS_SLOT = 3;
 
-		add(new ItemBox(CHESTPLATE_SLOT, Assets.ARMOR_FORM[1], chestplates));
-		add(new ItemBox(CHESTPLATE_SLOT, Assets.RUNE_FORM, trims));
-		add(new ItemBox(CHESTPLATE_SLOT, Assets.MATERIAL_FORM, minerals));
-		add(new ItemBox(CHESTPLATE_SLOT, Assets.DYES[0], dyes));
-		add(new ItemBox());
-		add(new ItemBox());
-		add(new ItemBox());
+		int SLOT = 0;
+		final int MAX_SLOT = 3;
 
-		// LEGGINGS
+		for (int i = 0; i <= MAX_SLOT; i++) {
 
-		add(new ItemBox(LEGGINGS_SLOT, Assets.ARMOR_FORM[2], leggings));
-		add(new ItemBox(LEGGINGS_SLOT, Assets.RUNE_FORM, trims));
-		add(new ItemBox(LEGGINGS_SLOT, Assets.MATERIAL_FORM, minerals));
-		add(new ItemBox(LEGGINGS_SLOT, Assets.DYES[0], dyes));
-		add(new ItemBox());
-		add(new ItemBox());
-		add(new ItemBox());
+			LinkedList<ItemBox> rowemptyboxes = new LinkedList<ItemBox>();
 
-		// BOOTS
+			itemboxes.add(new ItemBox(SLOT, Assets.ARMOR_FORM[0], helmets));
+			rowemptyboxes.add(itemboxes.peekLast());
+			itemboxes.add(new ItemBox(SLOT, Assets.RUNE_FORM, trims));
+			rowemptyboxes.add(itemboxes.peekLast());
+			itemboxes.add(new ItemBox(SLOT, Assets.MATERIAL_FORM, minerals));
+			rowemptyboxes.add(itemboxes.peekLast());
+			itemboxes.add(new ItemBox(SLOT, Assets.DYES[0], dyes));
+			rowemptyboxes.add(itemboxes.peekLast());
+			itemboxes.add(new ItemBox());
+			itemboxes.add(new ItemBox());
 
-		add(new ItemBox(BOOTS_SLOT, Assets.ARMOR_FORM[3], boots));
-		add(new ItemBox(BOOTS_SLOT, Assets.RUNE_FORM, trims));
-		add(new ItemBox(BOOTS_SLOT, Assets.MATERIAL_FORM, minerals));
-		add(new ItemBox(BOOTS_SLOT, Assets.DYES[0], dyes));
-		add(new ItemBox());
-		add(new ItemBox());
-		add(new ItemBox());
+			ItemBox[] rowboxes = new ItemBox[4];
+			itemboxes.add(new ItemBox(rowemptyboxes.toArray(rowboxes)));
+
+			SLOT++;
+
+		}
+
+		for (int i = 0; i < itemboxes.size(); i++) {
+			add(itemboxes.get(i));
+		}
 
 	}
 

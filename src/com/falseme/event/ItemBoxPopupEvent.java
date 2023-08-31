@@ -1,7 +1,6 @@
 package com.falseme.event;
 
 import java.awt.GridLayout;
-import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.JPopupMenu;
@@ -27,13 +26,18 @@ public class ItemBoxPopupEvent extends ItemBoxEvent {
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-
+		
+		// HIDE POPUP
 		if (!isMouseInsideBox(e.getX(), e.getY())) {
 			if (popup != null)
 				popup.setVisible(false);
 			return;
 		}
 
+		// DETECT LEFT MOUSE BUTTON
+		if(e.getButton() != MouseEvent.BUTTON1)
+			return;
+		
 		// IF IS AN ITEM INSIDE THE POPUP MENU
 		if (ib.isListItem()) {
 

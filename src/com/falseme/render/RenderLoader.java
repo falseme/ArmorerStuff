@@ -79,7 +79,7 @@ public class RenderLoader {
 				trimColorPalette = loadTrimColorPalette(armor[0][2], armor[0][0]);
 			}
 			currentImage = Assets.ARMOR[armor[0][0]][0];
-			leather_dye = armor[0][3];
+			leather_dye = armor[0][3] == -1 ? 16 : armor[0][3];
 			loadHelmet(tris);
 		}
 		// CHESTPLATE
@@ -92,7 +92,7 @@ public class RenderLoader {
 				trimColorPalette = loadTrimColorPalette(armor[1][2], armor[1][0]);
 			}
 			currentImage = Assets.ARMOR[armor[1][0]][0];
-			leather_dye = armor[1][3];
+			leather_dye = armor[1][3] == -1 ? 16 : armor[1][3];
 			loadChestplate(tris);
 		}
 		// LEGGINGS
@@ -105,7 +105,7 @@ public class RenderLoader {
 				trimColorPalette = loadTrimColorPalette(armor[2][2], armor[2][0]);
 			}
 			currentImage = Assets.ARMOR[armor[2][0]][1];
-			leather_dye = armor[2][3];
+			leather_dye = armor[2][3] == -1 ? 16 : armor[2][3];
 			loadLeggings(tris);
 		}
 		// BOOTS
@@ -118,7 +118,7 @@ public class RenderLoader {
 				trimColorPalette = loadTrimColorPalette(armor[3][2], armor[3][0]);
 			}
 			currentImage = Assets.ARMOR[armor[3][0]][0];
-			leather_dye = armor[3][3];
+			leather_dye = armor[3][3] == -1 ? 16 : armor[3][3];
 			loadBoots(tris);
 		}
 

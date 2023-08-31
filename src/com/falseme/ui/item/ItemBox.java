@@ -7,6 +7,7 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.JComponent;
 
+import com.falseme.event.EmptyItemBoxEvent;
 import com.falseme.event.ItemBoxMouseColoredEvent;
 import com.falseme.event.ItemBoxPopupEvent;
 import com.falseme.gui.Assets;
@@ -17,56 +18,68 @@ public class ItemBox extends JComponent {
 	protected BufferedImage background, placeHolder;
 	protected Item[] items;
 	protected Item item;
-	
+
 	private int inventorySlot;
 
 	private boolean listitem = false;
 
 	public ItemBox() {
-		
+
 		background = Assets.ITEMBOX;
 		setBackground(new Color(0, 0, 0, 0));
-		
+
 		setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		ItemBoxMouseColoredEvent colorMouseEvent = new ItemBoxMouseColoredEvent(this);
 		addMouseListener(colorMouseEvent);
 		addMouseMotionListener(colorMouseEvent);
 		setBorder(null);
-		
-		addMouseListener(new ItemBoxPopupEvent(this));
-		
+
 	}
-	
+
 	public ItemBox(int invSlot, BufferedImage placeHolder, Item... items) {
 
 		this();
-		
+
 		inventorySlot = invSlot;
-		
+
 		this.placeHolder = placeHolder;
 		this.items = items;
 		item = null;
-		
+
 		listitem = false;
 
+		addMouseListener(new ItemBoxPopupEvent(this));
+
 	}
-	
+
 	public ItemBox(Item item) {
-		
+
 		this();
-		
+
 		placeHolder = null;
 		this.item = item;
 		items = null;
-		
+
 		listitem = true;
+
+		addMouseListener(new ItemBoxPopupEvent(this));
+
+	}
+
+	public ItemBox(ItemBox... ibs) {
+
+		this();
 		
+		placeHolder = Assets.X;
+
+		addMouseListener(new EmptyItemBoxEvent(this, ibs));
+
 	}
 
 	public int getInventorySlot() {
 		return inventorySlot;
 	}
-	
+
 	public boolean isListItem() {
 		return listitem;
 	}
