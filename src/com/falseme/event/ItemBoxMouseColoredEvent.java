@@ -1,34 +1,28 @@
 package com.falseme.event;
 
 import java.awt.Color;
-import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.image.BufferedImage;
 
-import com.falseme.gui.Assets;
-import com.falseme.render.PlayerRender;
-import com.falseme.render.RenderLoader;
-import com.falseme.ui.item.Item;
 import com.falseme.ui.item.ItemBox;
 
-public class ItemBoxMouseColoredEvent extends MouseAdapter {
+public class ItemBoxMouseColoredEvent extends ItemBoxEvent {
 
 	boolean in = false;
-
-	private ItemBox ib;
-	private static ItemBox BOX_SELECTED = null;
-	private static ItemBox DYE_SELECTED = null;
+	boolean click = false;
 
 	public ItemBoxMouseColoredEvent(ItemBox ib) {
-
-		this.ib = ib;
-
+		super(ib);
 	}
 
 	@Override
 	public void mousePressed(MouseEvent e) {
+		if (!in)
+			return;
 
-		ib.setBackground(new Color(1f, 1f, 1f, 0.05f));
+		if (isMouseInsideBox(e.getX(), e.getY())) {
+			setClickColor();
+			click = true;
+		}
 
 	}
 
@@ -37,100 +31,46 @@ public class ItemBoxMouseColoredEvent extends MouseAdapter {
 		if (!in)
 			return;
 
-		if (e.getButton() == MouseEvent.BUTTON3 && ib != DYE_SELECTED) {
-
-			// unselect a box
-			if (BOX_SELECTED != null) {
-				BOX_SELECTED.setBackground(new Color(0, 0, 0, 0));
-				BOX_SELECTED = null;
-			}
-
-			// empty a box
-			if (ib.getItem().params[0] == 0) {
-				int[] params = ib.getItem().params;
-				params[2] = -1;
-				ib.empty(ib.getItem().type, params);
-
-				PlayerRender.loadRender();
-			}
-
-			return;
-
-		}
-
-		// DYE SELECTION
-		if (ib.getItem().params[0] == 2) { // Then is in DYE SECTION
-
-			RenderLoader.leather_dye = ib.getItem().params[1];
-			if (DYE_SELECTED != null)
-				DYE_SELECTED.setBackground(new Color(0, 0, 0, 0));
-
-			ib.setBackground(new Color(1f, 1f, 0.2f, 0.08f));
-			DYE_SELECTED = ib;
-
-			PlayerRender.loadRender();
-
-			return;
-
-		}
-
-		if (BOX_SELECTED == null) {
-
-			ib.setBackground(new Color(1f, 1f, 1f, 0.08f));
-			BOX_SELECTED = ib;
-
-		} else if (ib.getItem().params[0] == BOX_SELECTED.getItem().params[0]) {
-			// ARE THE IN THE SAME LINE
-
-			BOX_SELECTED.setBackground(new Color(0, 0, 0, 0));
-			ib.setBackground(new Color(1f, 1f, 1f, 0.1f));
-			BOX_SELECTED = ib;
-
-		} else if (ib.getItem().params[1] == BOX_SELECTED.getItem().params[1]) {
-			// ARE IN DIFFERENT LINES & THE SAME CATEGORY
-			// WILL MOVE THE ITEM
-
-			ib.setBackground(new Color(0, 0, 0, 0));
-			BOX_SELECTED.setBackground(new Color(0, 0, 0, 0));
-
-			// check which box has the pickable item
-			// userBox is the box with the wearing armor
-			ItemBox userBox, selectBox;
-			if (ib.getItem().params[0] == 0) {
-				userBox = ib;
-				selectBox = BOX_SELECTED;
-			} else {
-				userBox = BOX_SELECTED;
-				selectBox = ib;
-			}
-
-			int[] params = userBox.getItem().params;
-			params[2] = selectBox.getItem().params[2];
-
-			BufferedImage texture = selectBox.getItem().texture;
-			if (params.length > 3) { // IS AN ARMOR ITEMBOX
-				texture = Assets.ITEM_ARMOR[params[2]][params[3]];
-			}
-			userBox.setItem(new Item(userBox.getItem().type, texture, params));
-
-			BOX_SELECTED = null;
-
-			PlayerRender.loadRender();
-
+		if (isMouseInsideBox(e.getX(), e.getY())) {
+			setFocusColor();
+			click = false;
 		}
 
 	}
 
 	@Override
-	public void mouseEntered(MouseEvent e) {
-		in = true;
+	public void mouseMoved(MouseEvent e) {
+
+		if (isMouseInsideBox(e.getX(), e.getY()) && !click) {
+			setFocusColor();
+			in = true;
+		} else if(!isMouseInsideBox(e.getX(), e.getY())) {
+			setNormalColor();
+			in = false;
+			click = false;
+		}
+
 	}
 
 	@Override
 	public void mouseExited(MouseEvent e) {
 		in = false;
-		if (ib != BOX_SELECTED && ib != DYE_SELECTED)
-			ib.setBackground(new Color(0, 0, 0, 0));
+		setNormalColor();
+		click = false;
+	}
+
+	
+
+	private void setFocusColor() {
+		ib.setBackground(new Color(1f, 1f, 1f, 0.05f));
+	}
+
+	private void setClickColor() {
+		ib.setBackground(new Color(1f, 1f, 1f, 0.02f));
+	}
+
+	private void setNormalColor() {
+		ib.setBackground(new Color(0, 0, 0, 0));
 	}
 
 }

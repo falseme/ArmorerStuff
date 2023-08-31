@@ -9,6 +9,7 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.JComponent;
 
+import com.falseme.event.ItemBoxPopupEvent;
 import com.falseme.gui.Assets;
 
 public class BodyPart extends JComponent {
@@ -27,6 +28,7 @@ public class BodyPart extends JComponent {
 		addMouseListener(new MouseAdapter() {
 
 			public void mouseClicked(MouseEvent e) {
+				ItemBoxPopupEvent.hidePopup();
 				event.actionPerformed(null);
 				active = !active;
 				repaint();
@@ -46,14 +48,20 @@ public class BodyPart extends JComponent {
 
 	public void paintComponent(Graphics g) {
 
-		g.setColor(getBackground());
-		g.fillRect(0, 0, getWidth(), getHeight());
+		int borderwidth = 2;
+
+		// BORDER
 
 		if (active)
 			g.setColor(border);
 		else
 			g.setColor(Color.RED.darker());
-		g.drawRect(0, 0, getWidth() - 1, getHeight() - 1);
+		g.fillRect(0, 0, getWidth(), getHeight());
+
+		// BACKGROUND
+
+		g.setColor(getBackground());
+		g.fillRect(borderwidth, borderwidth, getWidth() - borderwidth * 2, getHeight() - borderwidth * 2);
 
 	}
 

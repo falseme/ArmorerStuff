@@ -7,64 +7,134 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.JComponent;
 
+import com.falseme.event.EmptyItemBoxEvent;
 import com.falseme.event.ItemBoxMouseColoredEvent;
+import com.falseme.event.ItemBoxPopupEvent;
 import com.falseme.gui.Assets;
-import com.falseme.ui.item.Item.ItemType;
 
 public class ItemBox extends JComponent {
 	private static final long serialVersionUID = 1l;
 
 	protected BufferedImage background, placeHolder;
+	protected Item[] items;
 	protected Item item;
 
-	private boolean isStatic = false;
+	private int inventorySlot;
 
-	public ItemBox(Item item, boolean isStatic, BufferedImage placeHolder) {
+	private boolean listitem = false;
 
-		this.isStatic = isStatic;
-		this.placeHolder = placeHolder;
+	public ItemBox() {
 
 		background = Assets.ITEMBOX;
 		setBackground(new Color(0, 0, 0, 0));
 
-		if (!isStatic) {
-			setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-			addMouseListener(new ItemBoxMouseColoredEvent(this));
-		}
-
-		this.item = item;
+		setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		ItemBoxMouseColoredEvent colorMouseEvent = new ItemBoxMouseColoredEvent(this);
+		addMouseListener(colorMouseEvent);
+		addMouseMotionListener(colorMouseEvent);
+		setBorder(null);
 
 	}
 
-	public void empty(ItemType type, int... params) {
-		item = new Item(type, null, params);
+	public ItemBox(int invSlot, BufferedImage placeHolder, Item... items) {
+
+		this();
+
+		inventorySlot = invSlot;
+
+		this.placeHolder = placeHolder;
+		this.items = items;
+		item = null;
+
+		listitem = false;
+
+		addMouseListener(new ItemBoxPopupEvent(this));
+
+	}
+
+	public ItemBox(Item item) {
+
+		this();
+
+		placeHolder = null;
+		this.item = item;
+		items = null;
+
+		listitem = true;
+
+		addMouseListener(new ItemBoxPopupEvent(this));
+
+	}
+
+	public ItemBox(BufferedImage placeholder, ItemBox... ibs) {
+
+		this();
+		
+		placeHolder = placeholder;
+
+		addMouseListener(new EmptyItemBoxEvent(this, ibs));
+
+	}
+
+	public int getInventorySlot() {
+		return inventorySlot;
+	}
+
+	public boolean isListItem() {
+		return listitem;
 	}
 
 	public Item getItem() {
 		return item;
 	}
 
+	public Item[] getItemList() {
+		return items;
+	}
+
 	public void setItem(Item item) {
 		this.item = item;
+		repaint();
+	}
+
+	public int getClickSize() {
+
+		double dim;
+		double factor = 0.8;
+		if (getWidth() <= getHeight())
+			dim = getWidth() * factor;
+		else
+			dim = getHeight() * factor;
+
+		return (int) dim;
 	}
 
 	public void paintComponent(Graphics g) {
 
-		if (!isStatic)
-			g.drawImage(background, 0, 0, getWidth(), getHeight(), null);
+		int S;
+		if (getWidth() <= getHeight())
+			S = getWidth();
+		else
+			S = getHeight();
+
+		// background
+		int size = (int) (S * 0.8);
+		int x = (getWidth() - size) / 2;
+		int y = (getHeight() - size) / 2;
+
+		g.drawImage(background, x, y, size, size, null);
 		g.setColor(getBackground());
-		g.fillRect(0, 0, getWidth(), getHeight());
+		g.fillRect(x, y, size, size);
 
-		// item & placeholder
-
-		int size = (int) (getWidth() * 0.7);
-		int pos = (getWidth() - size) / 2;
-
-		if (placeHolder != null && item.texture == null)
-			g.drawImage(placeHolder, pos, pos, size, size, null);
+		// item &(or) placeholder
+		int itemsize = (int) (size * 0.7);
+		int posx = (getWidth() - itemsize) / 2;
+		int posy = (getHeight() - itemsize) / 2;
 
 		if (item != null)
-			g.drawImage(item.texture, pos, pos, size, size, null);
+			g.drawImage(item.texture, posx, posy, itemsize, itemsize, null);
+		else if (placeHolder != null)
+			g.drawImage(placeHolder, posx, posy, itemsize, itemsize, null);
 
 	}
 

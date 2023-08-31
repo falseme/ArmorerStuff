@@ -224,7 +224,7 @@ public class PlayerRender extends JPanel {
 	public static void loadRender() {
 
 		skin = RenderLoader.loadSkin(SKIN_PATH);
-		armor = RenderLoader.loadArmor();
+		armor = RenderLoader.loadArmorAssets();
 
 		renderPanel.repaint();
 
