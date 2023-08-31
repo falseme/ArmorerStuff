@@ -3,9 +3,12 @@ package com.falseme.ui;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Image;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.JFrame;
 
+import com.falseme.event.ItemBoxPopupEvent;
 import com.falseme.gui.Assets;
 import com.falseme.render.PlayerRender;
 import com.falseme.ui.item.Inventory;
@@ -34,6 +37,12 @@ public class Window extends JFrame {
 		pane.add(new Body()); // small body representation to select the parts
 		Inventory inv = new Inventory();
 		pane.add(inv);
+		
+		pane.addMouseListener(new MouseAdapter() {
+			public void mouseReleased(MouseEvent e) {
+				ItemBoxPopupEvent.hidePopup();
+			}
+		});
 
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 

@@ -66,11 +66,11 @@ public class ItemBox extends JComponent {
 
 	}
 
-	public ItemBox(ItemBox... ibs) {
+	public ItemBox(BufferedImage placeholder, ItemBox... ibs) {
 
 		this();
 		
-		placeHolder = Assets.X;
+		placeHolder = placeholder;
 
 		addMouseListener(new EmptyItemBoxEvent(this, ibs));
 

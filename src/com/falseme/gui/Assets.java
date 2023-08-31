@@ -25,12 +25,14 @@ public class Assets {
 	public static BufferedImage[][] ARMOR_TRIM = new BufferedImage[16][2];
 
 	public static BufferedImage[] DYES = new BufferedImage[16];
+	public static BufferedImage DYE_FORM;
 
 	public static Color[] trimPalette = new Color[8];
 	public static Color[][] trimColor = new Color[10][8];
 	public static HashMap<Integer, Color[]> darkTrimColor = new HashMap<>();
 
 	public static BufferedImage X;
+	public static BufferedImage EMPTY;
 	public static BufferedImage ICON;
 
 	// colors
@@ -214,8 +216,10 @@ public class Assets {
 		DYES[13] = Loader.loadPng("/assets/dyes/green_dye.png");
 		DYES[14] = Loader.loadPng("/assets/dyes/red_dye.png");
 		DYES[15] = Loader.loadPng("/assets/dyes/black_dye.png");
+		DYE_FORM = Loader.loadPng("/assets/dyes/form.png");
 
 		X = Loader.loadPng("/assets/x.png");
+		EMPTY = Loader.loadPng("/assets/empty.png");
 		ICON = Loader.loadPng("/assets/icon.png");
 
 		System.out.println("ASSETS LOADED");

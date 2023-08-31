@@ -13,7 +13,7 @@ public class Inventory extends JComponent {
 
 	public Inventory() {
 
-		setLayout(new GridLayout(4, 7));
+		setLayout(new GridLayout(4, 5));
 
 		// ARMOR
 
@@ -57,7 +57,7 @@ public class Inventory extends JComponent {
 		for (int i = 0; i < dyes.length - 1; i++) {
 			dyes[i] = new Item(ItemType.dye, Assets.DYES[i], i);
 		}
-		dyes[dyes.length - 1] = new Item(ItemType.dye, Assets.X, dyes.length - 1);
+		dyes[dyes.length - 1] = new Item(ItemType.dye, Assets.DYE_FORM, dyes.length - 1);
 
 		// --- INVENTORY LAYOUT --- //
 
@@ -83,13 +83,11 @@ public class Inventory extends JComponent {
 			rowemptyboxes.add(itemboxes.peekLast());
 			itemboxes.add(new ItemBox(SLOT, Assets.MATERIAL_FORM, minerals));
 			rowemptyboxes.add(itemboxes.peekLast());
-			itemboxes.add(new ItemBox(SLOT, Assets.DYES[0], dyes));
+			itemboxes.add(new ItemBox(SLOT, Assets.DYE_FORM, dyes));
 			rowemptyboxes.add(itemboxes.peekLast());
-			itemboxes.add(new ItemBox());
-			itemboxes.add(new ItemBox());
 
 			ItemBox[] rowboxes = new ItemBox[4];
-			itemboxes.add(new ItemBox(rowemptyboxes.toArray(rowboxes)));
+			itemboxes.add(new ItemBox(Assets.EMPTY, rowemptyboxes.toArray(rowboxes)));
 
 			SLOT++;
 

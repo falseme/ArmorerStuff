@@ -88,5 +88,11 @@ public class ItemBoxPopupEvent extends ItemBoxEvent {
 		}
 
 	}
+	
+	public static void hidePopup() {
+		if(popup == null)
+			return;
+		popup.setVisible(false);
+	}
 
 }

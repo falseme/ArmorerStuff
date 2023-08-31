@@ -17,7 +17,12 @@ public class EmptyItemBoxEvent extends ItemBoxEvent {
 	@Override
 	public void mouseReleased(MouseEvent e) {
 
+		ItemBoxPopupEvent.hidePopup();
+
 		if (e.getButton() != MouseEvent.BUTTON1)
+			return;
+
+		if (!isMouseInsideBox(e.getX(), e.getY()))
 			return;
 
 		for (int i = 0; i < ibs.length; i++) {
