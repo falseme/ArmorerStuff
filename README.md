@@ -19,4 +19,4 @@ Import your skin, select different armor sets and choose your favorite one.
 
 Here's a preview:
 
-<img src="https://falseme.github.io/Fabricio-Tomas/res/armorerstuff.png" width="50%" height="50%" alt="ArmorerStuff preview">
+<img src="demo.png" width="50%" alt="ArmorerStuff preview">

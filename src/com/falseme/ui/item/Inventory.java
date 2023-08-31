@@ -17,25 +17,31 @@ public class Inventory extends JComponent {
 
 		// ARMOR
 
+		LinkedList<Item[]> armorlist = new LinkedList<Item[]>();
+
 		Item[] helmets = new Item[6];
 		for (int i = 0; i < helmets.length; i++) {
 			helmets[i] = new Item(ItemType.armor, Assets.ITEM_ARMOR[i][0], i);
 		}
+		armorlist.add(helmets);
 
 		Item[] chestplates = new Item[6];
 		for (int i = 0; i < chestplates.length; i++) {
 			chestplates[i] = new Item(ItemType.armor, Assets.ITEM_ARMOR[i][1], i);
 		}
+		armorlist.add(chestplates);
 
 		Item[] leggings = new Item[6];
 		for (int i = 0; i < leggings.length; i++) {
 			leggings[i] = new Item(ItemType.armor, Assets.ITEM_ARMOR[i][2], i);
 		}
+		armorlist.add(leggings);
 
 		Item[] boots = new Item[6];
 		for (int i = 0; i < boots.length; i++) {
 			boots[i] = new Item(ItemType.armor, Assets.ITEM_ARMOR[i][3], i);
 		}
+		armorlist.add(boots);
 
 		// TRIMS
 
@@ -77,7 +83,7 @@ public class Inventory extends JComponent {
 
 			LinkedList<ItemBox> rowemptyboxes = new LinkedList<ItemBox>();
 
-			itemboxes.add(new ItemBox(SLOT, Assets.ARMOR_FORM[0], helmets));
+			itemboxes.add(new ItemBox(SLOT, Assets.ARMOR_FORM[i], armorlist.poll()));
 			rowemptyboxes.add(itemboxes.peekLast());
 			itemboxes.add(new ItemBox(SLOT, Assets.RUNE_FORM, trims));
 			rowemptyboxes.add(itemboxes.peekLast());
