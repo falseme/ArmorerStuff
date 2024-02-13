@@ -15,11 +15,10 @@ import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JPanel;
-import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 
+import com.falseme.event.RenderMouseMovedListener;
 import com.falseme.gui.Assets;
-import com.falseme.ui.Slider;
 import com.falseme.user.Config;
 
 public class PlayerRender extends JPanel {
@@ -33,6 +32,11 @@ public class PlayerRender extends JPanel {
 	private static List<Triangle> armor = new ArrayList<>();
 //	private static List<Triangle> armor = RenderLoader.loadArmor();
 
+	private int xRotation = 0;
+	private int yRotation = 0;
+	private int YPos = 0;
+	private int FOV = 115;
+
 	public PlayerRender() {
 
 		// load skin
@@ -43,22 +47,6 @@ public class PlayerRender extends JPanel {
 
 		setLayout(new BorderLayout());
 
-		// slider to control horizontal rotation
-		Slider headingSlider = new Slider(-180, 180, 1);
-		add(headingSlider, BorderLayout.SOUTH);
-
-		// slider to control vertical rotation
-		Slider pitchSlider = new Slider(SwingConstants.VERTICAL, -90, 90, 1);
-		add(pitchSlider, BorderLayout.EAST);
-
-		// slider to control FoV
-		Slider FoVSlider = new Slider(1, 179, 90);
-		add(FoVSlider, BorderLayout.NORTH);
-
-		// slider to control general y-pos
-		Slider yPosSlider = new Slider(SwingConstants.VERTICAL, -400, 400, 0);
-		add(yPosSlider, BorderLayout.WEST);
-
 		// button to import skin
 		JButton btn = new JButton("Import skin");
 		btn.setBackground(Assets.BACKGROUND_LIGHT_COLOR.brighter());
@@ -66,11 +54,11 @@ public class PlayerRender extends JPanel {
 		btn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btn.setFont(new Font("Dialog", Font.BOLD, 10));
 		int w = 70, h = 20;
+		int gap = 20;
 		addComponentListener(new ComponentAdapter() {
 			@Override
 			public void componentResized(ComponentEvent e) {
-				btn.setBounds(getWidth() - pitchSlider.getWidth() - 10 - w,
-						getHeight() - headingSlider.getHeight() - 10 - h, w, h);
+				btn.setBounds(getWidth() - gap - w, getHeight() - gap - h, w, h);
 			}
 		});
 		add(btn);
@@ -99,10 +87,10 @@ public class PlayerRender extends JPanel {
 				g2.setColor(Assets.BACKGROUND_LIGHT_COLOR);
 				g2.fillRect(0, 0, getWidth(), getHeight());
 
-				double heading = Math.toRadians(headingSlider.getValue());
+				double heading = Math.toRadians(xRotation);
 				Matrix4 headingTransform = new Matrix4(new double[] { Math.cos(heading), 0, -Math.sin(heading), 0, 0, 1,
 						0, 0, Math.sin(heading), 0, Math.cos(heading), 0, 0, 0, 0, 1 });
-				double pitch = Math.toRadians(pitchSlider.getValue());
+				double pitch = Math.toRadians(yRotation);
 				Matrix4 pitchTransform = new Matrix4(new double[] { 1, 0, 0, 0, 0, Math.cos(pitch), Math.sin(pitch), 0,
 						0, -Math.sin(pitch), Math.cos(pitch), 0, 0, 0, 0, 1 });
 
@@ -111,7 +99,7 @@ public class PlayerRender extends JPanel {
 
 				double viewportWidth = getWidth();
 				double viewportHeight = getHeight();
-				double fovAngle = Math.toRadians(FoVSlider.getValue());
+				double fovAngle = Math.toRadians(FOV);
 				double fov = Math.tan(fovAngle / 2) * 170;
 
 				Matrix4 transform = headingTransform.multiply(pitchTransform).multiply(panOutTransform);
@@ -124,8 +112,6 @@ public class PlayerRender extends JPanel {
 					zBuffer[q] = Double.NEGATIVE_INFINITY;
 				}
 
-				int addYPos = yPosSlider.getValue();
-
 				ArrayList<Triangle> tris = new ArrayList<>(skin);
 				tris.addAll(armor);
 
@@ -134,9 +120,9 @@ public class PlayerRender extends JPanel {
 					Vertex v2 = transform.transform(t.v2);
 					Vertex v3 = transform.transform(t.v3);
 
-					v1.y += addYPos;
-					v2.y += addYPos;
-					v3.y += addYPos;
+					v1.y += YPos;
+					v2.y += YPos;
+					v3.y += YPos;
 
 					Vertex ab = new Vertex(v2.x - v1.x, v2.y - v1.y, v2.z - v1.z, v2.w - v1.w);
 					Vertex ac = new Vertex(v3.x - v1.x, v3.y - v1.y, v3.z - v1.z, v3.w - v1.w);
@@ -186,9 +172,9 @@ public class PlayerRender extends JPanel {
 						}
 					}
 
-					v1.y -= addYPos;
-					v2.y -= addYPos;
-					v3.y -= addYPos;
+					v1.y -= YPos;
+					v2.y -= YPos;
+					v3.y -= YPos;
 
 				}
 
@@ -201,10 +187,12 @@ public class PlayerRender extends JPanel {
 		};
 		add(renderPanel, BorderLayout.CENTER);
 
-		headingSlider.addChangeListener(e -> renderPanel.repaint());
-		pitchSlider.addChangeListener(e -> renderPanel.repaint());
-		FoVSlider.addChangeListener(e -> renderPanel.repaint());
-		yPosSlider.addChangeListener(e -> renderPanel.repaint());
+		RenderMouseMovedListener renderMouseListener = new RenderMouseMovedListener(this);
+		renderPanel.addMouseListener(renderMouseListener);
+		renderPanel.addMouseMotionListener(renderMouseListener);
+		renderPanel.addMouseWheelListener(renderMouseListener);
+		
+		renderPanel.setCursor(Cursor.getPredefinedCursor(Cursor.MOVE_CURSOR));
 
 	}
 
@@ -230,6 +218,41 @@ public class PlayerRender extends JPanel {
 
 	}
 
+	public void setRotation(int xRot, int yRot) {
+
+		xRotation = xRot;
+		yRotation = yRot;
+
+		renderPanel.repaint();
+
+	}
+
+	public int getXRotation() {
+		return xRotation;
+	}
+	
+	public int getYRotation() {
+		return yRotation;
+	}
+	
+	public void setPos(int ypos) {
+		YPos = ypos;
+		renderPanel.repaint();
+	}
+	
+	public int getPos() {
+		return YPos;
+	}
+	
+	public void setFOV(int fov) {
+		FOV = fov;
+		renderPanel.repaint();
+	}
+	
+	public int getFOV() {
+		return FOV;
+	}
+	
 }
 
 class Vertex {
