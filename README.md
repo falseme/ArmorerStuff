@@ -2,7 +2,7 @@
 	<img src="icon-big.png" width="256" height="256" alt="Tasky logo">
 	<br>
 	<h1 style="font-size:30px">Armorer's Stuff</h1>
-	<a href="https://github.com/falseme/ArmorerStuff/releases/tag/v1.0">
+	<a href="https://github.com/falseme/ArmorerStuff/releases/latest">
 		<img src="https://img.shields.io/badge/armorer_stuff-download-informational?style=for-the-badge&logo=DocuSign&logoColor=fff" alt="ArmorerStuff download">
 	</a>
 	<br>
