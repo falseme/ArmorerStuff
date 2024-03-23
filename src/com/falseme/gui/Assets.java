@@ -17,12 +17,12 @@ public class Assets {
 	public static BufferedImage ITEMBOX;
 	public static BufferedImage ITEMLABEL;
 
-	public static BufferedImage[] RUNE = new BufferedImage[16];
+	public static BufferedImage[] RUNE = new BufferedImage[18];
 	public static BufferedImage RUNE_FORM;
 	public static BufferedImage[] MATERIAL = new BufferedImage[10];
 	public static BufferedImage MATERIAL_FORM;
 
-	public static BufferedImage[][] ARMOR_TRIM = new BufferedImage[16][2];
+	public static BufferedImage[][] ARMOR_TRIM = new BufferedImage[18][2];
 
 	public static BufferedImage[] DYES = new BufferedImage[16];
 	public static BufferedImage DYE_FORM;
@@ -136,6 +136,8 @@ public class Assets {
 		RUNE[13] = Loader.loadPng("/assets/runes/shaper.png");
 		RUNE[14] = Loader.loadPng("/assets/runes/host.png");
 		RUNE[15] = Loader.loadPng("/assets/runes/silence.png");
+		RUNE[16] = Loader.loadPng("/assets/runes/flow.png");
+		RUNE[17] = Loader.loadPng("/assets/runes/bolt.png");
 		RUNE_FORM = Loader.loadPng("/assets/runes/form.png");
 
 		MATERIAL[0] = Loader.loadPng("/assets/materials/iron.png");
@@ -182,6 +184,10 @@ public class Assets {
 		ARMOR_TRIM[14][1] = Loader.loadPng("/assets/trims/host_leggings.png");
 		ARMOR_TRIM[15][0] = Loader.loadPng("/assets/trims/silence.png");
 		ARMOR_TRIM[15][1] = Loader.loadPng("/assets/trims/silence_leggings.png");
+		ARMOR_TRIM[16][0] = Loader.loadPng("/assets/trims/flow.png");
+		ARMOR_TRIM[16][1] = Loader.loadPng("/assets/trims/flow_leggings.png");
+		ARMOR_TRIM[17][0] = Loader.loadPng("/assets/trims/bolt.png");
+		ARMOR_TRIM[17][1] = Loader.loadPng("/assets/trims/bolt_leggings.png");
 
 		trimColor[0] = Loader.loadPalette("/assets/color_palettes/iron.png");
 		trimColor[1] = Loader.loadPalette("/assets/color_palettes/copper.png");

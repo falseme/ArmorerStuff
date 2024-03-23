@@ -1,5 +1,6 @@
 package com.falseme.event;
 
+import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.MouseEvent;
 
@@ -61,8 +62,8 @@ public class ItemBoxPopupEvent extends ItemBoxEvent {
 				popup.setVisible(false);
 
 			popup = new JPopupMenu();
-			popup.setBackground(Assets.BACKGROUND_COLOR.darker());
-			popup.setBorder(new LineBorder(Assets.BACKGROUND_COLOR.darker().darker(), 2, false));
+			popup.setBackground(Assets.BACKGROUND_COLOR.darker().darker());
+			popup.setBorder(new LineBorder(Color.BLACK, 2, true));
 
 			int gridx = 1; // columns
 			int gridy = ib.getItemList().length; // rows

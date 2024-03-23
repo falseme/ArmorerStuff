@@ -14,7 +14,7 @@ public class Loader {
 		try {
 			URL location = Loader.class.getResource(path);
 			if (location == null)
-				System.out.println(path);
+				System.out.println("[LOADER] Does not exist: " + path);
 			if (location == null)
 				return null;
 			return ImageIO.read(location);
